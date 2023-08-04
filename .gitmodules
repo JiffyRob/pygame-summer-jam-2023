@@ -1,6 +1,3 @@
 [submodule "src/bush"]
 	path = src/bush
 	url = https://github.com/jiffyrob/bush.git
-[submodule "src/pytmx"]
-	path = src/pytmx
-	url = https://github.com/bitcraft/pytmx.git
