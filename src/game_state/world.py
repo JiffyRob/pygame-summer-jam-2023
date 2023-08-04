@@ -41,7 +41,9 @@ class MapState(base.GameState):
             self.layer_down()
         if event.type == common.LAYER_UP:
             self.layer_up()
-
+        if event.type == common.GAME_OVER:
+            self.pop()
+            map_loader.clear_cache()
         return super().handle_event(event)
 
     def layer_up(self):
@@ -86,3 +88,4 @@ def switch_map(stack, name, player_pos=None, pop=True):
             properties.get("below", None),
         )
     )
+    return registry, properties

@@ -2,6 +2,7 @@ import pygame
 
 import arg
 import common
+import enemy
 import player
 import pytmx
 from bush import asset_handler, entity, physics
@@ -13,7 +14,7 @@ class MapLoader(mapping.MapLoader):
 
     def __init__(self):
         self.sprite_classes = {
-            # TODO
+            "eel": enemy.EelHead,
         }
         self.default_player_layer = 4  # second layer (default sub)
         self.mask_loader = asset_handler.AssetHandler("masks")
@@ -28,14 +29,14 @@ class MapLoader(mapping.MapLoader):
                     map_size,
                     (0, 0),
                     self.player,
-                    False,
+                    True,
                     debug_physics=False,
                 ),
                 "player": lambda x: pygame.sprite.GroupSingle(self.player),
                 "collision": lambda x: pygame.sprite.Group(),
                 "scriptable": lambda x: group.EntityGroup(),
                 "interactable": lambda x: pygame.sprite.Group(),
-                "attackable": lambda x: pygame.sprite.Group(),
+                "enemies": lambda x: pygame.sprite.Group(),
             },
         )
 

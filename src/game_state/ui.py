@@ -86,7 +86,9 @@ class MainMenu(MenuState):
         )
 
     def play(self):
-        world.switch_map(self._stack, "test.tmx", pop=False)
+        registry, properties = world.switch_map(self._stack, "test.tmx", pop=False)
+        registry.get_group("player").sprite.new_game()
+        self.rebuild()
 
     def pop(self):
         if util.is_pygbag():

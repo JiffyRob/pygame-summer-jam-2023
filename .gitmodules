@@ -1,3 +1,6 @@
 [submodule "src/bush"]
 	path = src/bush
 	url = https://github.com/jiffyrob/bush.git
+[submodule "src/snek"]
+	path = src/snek
+	url = https://github.com/jiffyrob/snek

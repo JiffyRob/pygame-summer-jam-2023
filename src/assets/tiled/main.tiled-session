@@ -8,11 +8,11 @@
     ],
     "fileStates": {
         "test.tmx": {
-            "scale": 1,
-            "selectedLayer": 0,
+            "scale": 0.75,
+            "selectedLayer": -1,
             "viewCenter": {
-                "x": 341,
-                "y": 221
+                "x": 328,
+                "y": 324
             }
         },
         "under_test.tmx": {
