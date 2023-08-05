@@ -224,14 +224,14 @@ class MobileGameObject(GameObject):
         if self.slowed:
             self.desired_velocity *= 0.7
             self.slowed = False
-        self.desired_velocity += self.drift_veloc
-        self.drift_veloc *= 0
-        self.update_rects()
         # slippety-slide!
         traction = common.TERRAINS[self.terrain]["traction"]
-        self.velocity = (self.desired_velocity * traction) + self.velocity * (
-            1 - traction
+        self.velocity = (
+            (self.desired_velocity * traction)
+            + self.velocity * (1 - traction)
+            + self.drift_veloc
         )
+        self.drift_veloc *= 0
 
         physics.dynamic_update(self, dt)
         self.update_rects()
