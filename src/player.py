@@ -23,6 +23,8 @@ class Player(game_object.MobileGameObject):
         self.boost_cooldown = timer.Timer(600)
         self.boost_cooldown.finish()
         self.map_cooldown = timer.Timer(700)
+        self.slowed = False
+        self.mask = pygame.Mask(self.rect.size, True)
 
     def update_rects(self):
         self.rect.center = self.collision_rect.center = self.pos

@@ -20,7 +20,9 @@ class Enemy(game_object.MobileGameObject):
 
     def update_behaviour(self, dt):
         player = self.registry.get_group("player").sprite
-        if self.collision_rect.colliderect(player.collision_rect):
+        if player is not None and self.collision_rect.colliderect(
+            player.collision_rect
+        ):
             player.hurt(self.touch_damage)
 
 
@@ -66,9 +68,10 @@ class EelHead(Enemy):
 
     def update_behaviour(self, dt):
         self.turn_timer.update()
-        if self.turn_type == self.TTYPE_FOLLOW:
+        player = self.registry.get_group("player").sprite
+        if player is not None and self.turn_type == self.TTYPE_FOLLOW:
             self.desired_velocity = self.desired_velocity.slerp(
-                self.registry.get_group("player").sprite.pos - self.pos, 0.02
+                player.pos - self.pos, 0.02
             ).clamp_magnitude(self.SPEED)
         else:
             self.desired_velocity.rotate_ip(self.turn_speed)

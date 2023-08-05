@@ -4,6 +4,7 @@ import arg
 import common
 import enemy
 import player
+import puzzle
 import pytmx
 from bush import asset_handler, entity, physics
 from bush.mapping import group, mapping
@@ -15,6 +16,8 @@ class MapLoader(mapping.MapLoader):
     def __init__(self):
         self.sprite_classes = {
             "eel": enemy.EelHead,
+            "pushblock": puzzle.Pushblock,
+            "conveyor": puzzle.Drifter,
         }
         self.default_player_layer = 4  # second layer (default sub)
         self.mask_loader = asset_handler.AssetHandler("masks")

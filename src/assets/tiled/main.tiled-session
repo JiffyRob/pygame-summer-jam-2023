@@ -33,7 +33,7 @@
     "openFiles": [
     ],
     "project": "main.tiled-project",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
     ],
     "tileset.lastUsedFormat": "tsx",

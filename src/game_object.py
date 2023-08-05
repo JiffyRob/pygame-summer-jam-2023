@@ -178,12 +178,20 @@ class MobileGameObject(GameObject):
         self.collision_rect = self.rect.copy()
         self.mobile = True
         self.terrain = "water"
+        self.slowed = False
+        self.drift_veloc = pygame.Vector2()
 
     def mobilize(self):
         self.mobile = True
 
     def immobilize(self):
         self.mobile = False
+
+    def slow(self):
+        self.slowed = True
+
+    def drift(self, amount):
+        self.drift_veloc += amount
 
     def face(self, dest):
         if isinstance(dest, str):
@@ -213,6 +221,11 @@ class MobileGameObject(GameObject):
 
     def update_physics(self, dt):
         self.desired_velocity *= self.mobile
+        if self.slowed:
+            self.desired_velocity *= 0.7
+            self.slowed = False
+        self.desired_velocity += self.drift_veloc
+        self.drift_veloc *= 0
         self.update_rects()
         # slippety-slide!
         traction = common.TERRAINS[self.terrain]["traction"]
