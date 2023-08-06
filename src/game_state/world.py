@@ -56,6 +56,8 @@ class MapState(base.GameState):
         if event.type == common.GAME_OVER:
             self.pop()
             map_loader.clear_cache()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+            pygame.event.post(pygame.Event(common.PAUSE))
         return super().handle_event(event)
 
     def layer_up(self):

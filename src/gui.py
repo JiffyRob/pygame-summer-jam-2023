@@ -7,7 +7,7 @@ from bush import asset_handler, event_binding, timer
 loader = asset_handler.glob_loader
 
 UI_FONT = pygame.font.Font(
-    asset_handler.join(loader.base, "hud/TeenyTinyPixls.ttf"), 12
+    asset_handler.join(loader.base, "hud/TeenyTinyPixls.ttf"), 10
 )
 
 NUMBER_FONT = pygame.font.Font(

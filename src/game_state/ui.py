@@ -4,7 +4,7 @@ import common
 import map_loader
 import menu
 from bush import util
-from game_state import base, world
+from game_state import base
 
 map_loader = map_loader.MapLoader()
 
@@ -56,7 +56,7 @@ class PauseMenu(MenuState):
         )
 
     def quit(self):
-        pygame.event.post(pygame.event.Event(pygame.QUIT))
+        pygame.event.post(pygame.event.Event(common.GAME_OVER))
 
     def rebuild(self):
         self.gui = menu.create_menu(
@@ -86,8 +86,7 @@ class MainMenu(MenuState):
         )
 
     def play(self):
-        registry, properties = world.switch_map(self._stack, "test.tmx", pop=False)
-        registry.get_group("player").sprite.new_game()
+        pygame.event.post(pygame.Event(common.GAME_START))
         self.rebuild()
 
     def pop(self):

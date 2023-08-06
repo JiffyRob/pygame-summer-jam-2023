@@ -12,7 +12,7 @@ import gui
 import player
 from bush import util
 from bush.ai import state
-from game_state import ui
+from game_state import ui, world
 
 
 class Game:
@@ -64,6 +64,10 @@ class Game:
                             self.gui_group,
                         )
                     )
+                if event.type == common.PAUSE:
+                    self.stack.push(ui.PauseMenu(self.screen.copy()))
+                if event.type == common.GAME_START:
+                    world.switch_map(self.stack, "test.tmx", pop=False)
                 state.handle_event(event)
                 if self.dialog_group:
                     self.dialog_group.sprite.pass_event(event)
