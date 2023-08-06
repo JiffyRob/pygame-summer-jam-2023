@@ -67,6 +67,16 @@ class Key(Pickup):
             self.kill()
 
 
+class Machinery(Pickup):
+    def __init__(self, data):
+        super().__init__(data)
+        self.value = data.misc["value"]
+
+    def pickup(self):
+        if self.registry.get_group("player").sprite.get_machinery(self.value):
+            self.kill()
+
+
 class Communicator(game_object.GameObject):
     registry_groups = ("main", "communicators")
 
@@ -171,3 +181,22 @@ class PressurePlate(Communicator):
             self.send_signal(False)
         self.was_down = self.down
         self.down = False
+
+
+class Switch(Communicator):
+    registry_groups = ("main", "communicators", "interactable")
+
+    def __init__(self, data):
+        super().__init__(data)
+        self.state = data.misc.get("start-state", "off")
+        self.signal_values = {
+            "on": 1,
+            "off": 0,
+        }
+        self.state_switches = {"on": "off", "off": "on"}
+
+    def interact(self):
+        print(self.state)
+        self.state = self.state_switches.get(self.state, self.state)
+        value = self.signal_values.get(self.state, 0)
+        self.send_signal(value)

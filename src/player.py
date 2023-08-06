@@ -28,6 +28,7 @@ class Player(game_object.MobileGameObject):
         self.mask = pygame.Mask(self.rect.size, True)
         self.interaction_rect = pygame.Rect(0, 0, 0, 0)
         self.keys = 0
+        self.machinery = 0
 
     def update_rects(self):
         self.rect.center = self.collision_rect.center = self.pos
@@ -92,6 +93,15 @@ class Player(game_object.MobileGameObject):
             return False
         self.keys += 1
         return True
+
+    def get_machinery(self, machinery):
+        self.machinery |= machinery
+        return True
+    
+    def give_machinery(self):
+        value = self.machinery
+        self.machinery = 0
+        return value
 
     def lose_key(self):
         if self.keys <= 0:

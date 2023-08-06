@@ -8,5 +8,17 @@
         "."
     ],
     "propertyTypes": [
+        {
+            "id": 1,
+            "name": "Machinery",
+            "storageType": "int",
+            "type": "enum",
+            "values": [
+                "Machinery_1",
+                "Machinery_2",
+                "Machinery_3"
+            ],
+            "valuesAsFlags": false
+        }
     ]
 }

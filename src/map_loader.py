@@ -21,6 +21,8 @@ class MapLoader(mapping.MapLoader):
             "door": puzzle.Door,
             "pressure-plate": puzzle.PressurePlate,
             "key": puzzle.Key,
+            "switch": puzzle.Switch,
+            "machinery": puzzle.Machinery,
         }
         self.default_player_layer = 4  # second layer (default sub)
         self.mask_loader = asset_handler.AssetHandler("masks")
