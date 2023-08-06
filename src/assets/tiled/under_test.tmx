@@ -84,7 +84,7 @@
   </object>
   <object id="24" type="machinery" gid="3" x="192" y="144" width="16" height="16">
    <properties>
-    <property name="value" type="int" propertytype="Machinery" value="2"/>
+    <property name="value" value="machinery1"/>
    </properties>
   </object>
   <object id="25" type="fish" gid="1" x="109" y="98" width="16" height="16"/>
@@ -92,7 +92,7 @@
   <object id="27" type="health" gid="6" x="96" y="176" width="16" height="16"/>
   <object id="28" type="machinery" gid="6" x="80" y="176" width="16" height="16">
    <properties>
-    <property name="value" type="int" propertytype="Machinery" value="1"/>
+    <property name="value" value="machinery2"/>
    </properties>
   </object>
   <object id="29" type="key" gid="6" x="64" y="176" width="16" height="16"/>

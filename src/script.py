@@ -30,10 +30,11 @@ class Script:
         self.registry = registry
         namespace = {
             "THIS": this,
-            "MACHINERY_1": common.Machinery.MACHINERY_1,
-            "MACHINERY_2": common.Machinery.MACHINERY_2,
-            "MACHINERY_3": common.Machinery.MACHINERY_3,
-            "MACHINERY_4": common.Machinery.MACHINERY_4,
+            "MACHINERY_1": "machinery1",
+            "MACHINERY_2": "machinery2",
+            "MACHINERY_3": "machinery3",
+            "MACHINERY_4": "machinery4",
+            "MACHINERY_5": "machinery5",
         }
         api = {
             # player interaction

@@ -2,19 +2,14 @@ import math
 
 import pygame
 
-from bush import asset_handler, event_binding, timer
+from bush import asset_handler, timer
 
 loader = asset_handler.glob_loader
 
-UI_FONT = pygame.font.Font(
-    asset_handler.join(loader.base, "hud/TeenyTinyPixls.ttf"), 10
-)
+UI_FONT = pygame.font.Font(asset_handler.join(loader.base, "TeenyTinyPixls.ttf"), 10)
 
-NUMBER_FONT = pygame.font.Font(
-    asset_handler.join(loader.base, "hud/TeenyTinyPixls.ttf"), 5
-)
+NUMBER_FONT = pygame.font.Font(asset_handler.join(loader.base, "TeenyTinyPixls.ttf"), 5)
 
-HEART_IMAGES = loader.load_spritesheet("hud/heart.png")
 
 # button states
 STATE_NORMAL = 0
@@ -40,7 +35,7 @@ BUTTON_TEXT_COLOR = BLACK
 BG_COLOR = BLACK
 BORDER_COLOR = BLUISH_GREEN
 TEXT_COLOR = WHITE
-COLORKEY = (0, 255, 0)
+COLORKEY = (255, 0, 255)
 
 # anchor constants for the Text object
 ANCHOR_TOPLEFT = 0
@@ -210,58 +205,12 @@ class TextInput(UIElement):
                 self.rebuild()
 
 
-class HeartMeter(UIElement):
-    def __init__(self, sprite, rect, layer, group):
-        super().__init__(rect, layer, group)
-        self.sprite_to_monitor = sprite
-        self.current_data = None
-        self.last_data = None
-        self.heart_size = pygame.Vector2(HEART_IMAGES[0].get_size())
-        self.rebuild()
-
-    def rebuild(self):
-        heart_count = math.ceil(
-            self.sprite_to_monitor.health_capacity / len(HEART_IMAGES)
-        )
-        columns = self.rect.width // self.heart_size.x
-        self.image = pygame.Surface(self.rect.size, pygame.SRCALPHA)
-        health_left = self.sprite_to_monitor.current_health
-        health_per_heart = len(HEART_IMAGES) - 1
-        pos = pygame.Vector2()
-        for i in range(heart_count):
-            if health_left > health_per_heart:
-                heart_index = health_per_heart
-            else:
-                heart_index = health_left
-            health_left -= heart_index
-            self.image.blit(HEART_IMAGES[heart_index], pos)
-            pos.x += self.heart_size.x
-            if pos.x + self.heart_size.x >= self.rect.width:
-                pos.x = 0
-                pos.y += self.heart_size.y
-        self.rect.size = self.image.get_size()
-        self.last_data = (
-            self.sprite_to_monitor.current_health,
-            self.sprite_to_monitor.health_capacity,
-        )
-
-    def update(self, dt):
-        super().update(dt)
-        self.current_data = (
-            self.sprite_to_monitor.current_health,
-            self.sprite_to_monitor.health_capacity,
-        )
-        if self.current_data != self.last_data:
-            self.rebuild()
-
-
 class BarMeter(UIElement):
     THEME = {
         "outline_color": (156, 101, 70),
         "outline_width": 1,
         "roundness": 2,
-        "background": (255, 255, 0),
-        "colorkey": (255, 255, 0),
+        "background": COLORKEY,
         "bar_color": (255, 0, 0),
     }
 
@@ -274,7 +223,6 @@ class BarMeter(UIElement):
         self.rebuild()
 
     def rebuild(self):
-        self.image.set_colorkey(self.theme["colorkey"])
         self.image.fill(self.theme["background"])
         pygame.draw.rect(
             self.image,
@@ -394,3 +342,40 @@ class Dialog(UIElement):
         if self.state == STATE_COMPLETE and not self.answers:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.choose()
+
+
+class Inventory(UIElement):
+    def __init__(self, images, getter, rect, layer, group):
+        self.images = images
+        self.getter = getter
+        self.current_data = self.last_data = self.getter()
+        super().__init__(rect, layer, group)
+        self.max_size = (0, 0)
+        for image in images.values():
+            image_size = image.get_size()
+            self.max_size = (
+                max(self.max_size[0], image_size[0]),
+                max(self.max_size[1], image_size[1]),
+            )
+        self.rebuild()
+
+    def rebuild(self):
+        self.image.fill(COLORKEY)
+        pos = pygame.Vector2()
+        for item in self.current_data:
+            image = None
+            if item is not None:
+                image = self.images[item]
+            if pos.x + self.max_size[0] > self.rect.width:
+                pos.x = 0
+                pos.y += self.max_size[1] - 2
+            if item is not None:
+                self.image.blit(image, pos)
+            pos += (self.max_size[0] - 2, 0)
+
+    def update(self, dt):
+        self.current_data = self.getter()
+        if self.current_data != self.last_data:
+            self.rebuild()
+        self.last_data = self.current_data
+        super().update(dt)

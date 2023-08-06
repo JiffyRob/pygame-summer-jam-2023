@@ -1,12 +1,12 @@
 import pygame
+from bush import asset_handler
 
-
-class Machinery:
-    MACHINERY_1 = 1
-    MACHINERY_2 = 2
-    MACHINERY_3 = 4
-    MACHINERY_4 = 8
-
+ITEM_IMAGES = dict(
+    zip(
+        asset_handler.glob_loader.load("pickup_names.csv", flatten=True),
+        asset_handler.glob_loader.load_spritesheet("pickups.png", (8, 8)),
+    )
+)
 
 TERRAINS = {
     "metal": {

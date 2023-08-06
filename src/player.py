@@ -28,7 +28,7 @@ class Player(game_object.MobileGameObject):
         self.mask = pygame.Mask(self.rect.size, True)
         self.interaction_rect = pygame.Rect(0, 0, 0, 0)
         self.keys = 0
-        self.machinery = 0
+        self.machinery = []
         self.oxygen = self.max_oxygen = 1000
         self.oxygen_timer = timer.Timer(100, self.lower_oxygen, True)
 
@@ -90,6 +90,19 @@ class Player(game_object.MobileGameObject):
                 sprite.interact()
                 self.interaction_cooldown.reset()
 
+    def get_inventory(self):
+        return (
+            # keys
+            (["key"] * self.keys)
+            # padding
+            # + ([None] * (3 - self.keys))
+            # machinery
+            + [
+                f"machinery{i}" if f"machinery{i}" in self.machinery else None
+                for i in range(1, 6)
+            ]
+        )
+
     def get_key(self):
         if self.keys >= 3:
             return False
@@ -97,7 +110,7 @@ class Player(game_object.MobileGameObject):
         return True
 
     def get_machinery(self, machinery):
-        self.machinery |= machinery
+        self.machinery.append(machinery)
         return True
 
     def refill_oxygen(self):
@@ -114,7 +127,7 @@ class Player(game_object.MobileGameObject):
     def give_machinery(self):
         print("giving", self.machinery)
         value = self.machinery
-        self.machinery = 0
+        self.machinery = []
         return value
 
     def lose_key(self):
@@ -188,3 +201,5 @@ class Player(game_object.MobileGameObject):
 
     def new_game(self):
         self.heal(100000)
+        self.keys = 0
+        self.machinery = 0

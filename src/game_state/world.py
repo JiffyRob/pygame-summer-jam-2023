@@ -1,12 +1,10 @@
-import os
-
 import pygame
 
 import common
 import gui
 import map_loader
-from bush import event_binding, particle, timer, util
-from game_state import base, ui
+from bush import particle
+from game_state import base
 
 map_loader = map_loader.MapLoader()
 
@@ -35,6 +33,9 @@ class MapState(base.GameState):
             hud,
             bar_color="white",
         )
+        rect = pygame.Rect(4, 0, 64, 10)
+        rect.bottom = common.SCREEN_SIZE[1] - 4
+        gui.Inventory(common.ITEM_IMAGES, player.get_inventory, rect, 1, hud)
         super().__init__(filename, gui=hud)
         self.filename = filename
         self.above = above
