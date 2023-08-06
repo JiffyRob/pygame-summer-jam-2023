@@ -14,7 +14,7 @@ class Enemy(game_object.MobileGameObject):
 
     def __init__(self, data, anim_dict=None, touch_damage=2, scripted=False):
         super().__init__(data, anim_dict)
-        self.touch_damage = 2
+        self.touch_damage = touch_damage
         if scripted:
             self.run_script(data.script)
 
@@ -96,7 +96,15 @@ class EelBody(Enemy):
 
 
 class Fish(Enemy):
-    SPEED = 12
+    SPEED = 6
 
     def __init__(self, data):
-        ...
+        data.image = util.circle_surf(6, "chartreuse")
+        super().__init__(data)
+
+    def update_behaviour(self, dt):
+        if self.registry.get_group("player").sprite:
+            self.desired_velocity = (
+                self.registry.get_group("player").sprite.pos - self.pos
+            ).clamp_magnitude(self.SPEED)
+        super().update_behaviour(dt)

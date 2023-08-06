@@ -3,6 +3,7 @@ import pygame
 import arg
 import common
 import enemy
+import pickup
 import player
 import puzzle
 import pytmx
@@ -20,9 +21,12 @@ class MapLoader(mapping.MapLoader):
             "conveyor": puzzle.Drifter,
             "door": puzzle.Door,
             "pressure-plate": puzzle.PressurePlate,
-            "key": puzzle.Key,
+            "key": pickup.Key,
             "switch": puzzle.Switch,
-            "machinery": puzzle.Machinery,
+            "machinery": pickup.Machinery,
+            "fish": enemy.Fish,
+            "oxygen": pickup.Oxygen,
+            "health": pickup.Health,
         }
         self.default_player_layer = 4  # second layer (default sub)
         self.mask_loader = asset_handler.AssetHandler("masks")

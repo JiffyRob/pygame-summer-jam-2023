@@ -77,7 +77,10 @@ class GameObject(entity.Actor):
         self.visual_effects.append(effect)
 
     def heal(self, amount):
+        if self.current_health >= self.health_capacity:
+            return False
         self.current_health = min(self.health_capacity, self.current_health + amount)
+        return True
 
     def hurt(self, amount):
         print("ouch!", self, amount)

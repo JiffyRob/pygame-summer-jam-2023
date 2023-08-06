@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="25">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="30">
  <properties>
   <property name="above" value="test.tmx"/>
   <property name="underwater" type="bool" value="true"/>
@@ -86,5 +86,14 @@
     <property name="value" type="int" propertytype="Machinery" value="0"/>
    </properties>
   </object>
+  <object id="25" type="fish" gid="1" x="109" y="98" width="16" height="16"/>
+  <object id="26" type="oxygen" gid="6" x="112" y="176" width="16" height="16"/>
+  <object id="27" type="health" gid="6" x="96" y="176" width="16" height="16"/>
+  <object id="28" type="machinery" gid="6" x="80" y="176" width="16" height="16">
+   <properties>
+    <property name="value" type="int" propertytype="Machinery" value="1"/>
+   </properties>
+  </object>
+  <object id="29" type="key" gid="6" x="64" y="176" width="16" height="16"/>
  </objectgroup>
 </map>

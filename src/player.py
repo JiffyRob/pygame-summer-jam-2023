@@ -98,6 +98,10 @@ class Player(game_object.MobileGameObject):
         self.machinery |= machinery
         return True
 
+    def refill_oxygen(self):
+        print("breathe")
+        return True
+
     def give_machinery(self):
         value = self.machinery
         self.machinery = 0

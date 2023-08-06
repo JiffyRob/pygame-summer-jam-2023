@@ -51,32 +51,6 @@ class Drifter(game_object.GameObject):
             print("can't collide with", other)
 
 
-class Pickup(game_object.GameObject):
-    registry_groups = ("main", "pickups")
-
-    def __init__(self, data):
-        super().__init__(data)
-
-    def pickup(self):
-        pass
-
-
-class Key(Pickup):
-    def pickup(self):
-        if self.registry.get_group("player").sprite.get_key():
-            self.kill()
-
-
-class Machinery(Pickup):
-    def __init__(self, data):
-        super().__init__(data)
-        self.value = data.misc["value"]
-
-    def pickup(self):
-        if self.registry.get_group("player").sprite.get_machinery(self.value):
-            self.kill()
-
-
 class Communicator(game_object.GameObject):
     registry_groups = ("main", "communicators")
 
