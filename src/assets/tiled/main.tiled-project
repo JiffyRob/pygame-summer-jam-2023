@@ -18,7 +18,7 @@
                 "Machinery_2",
                 "Machinery_3"
             ],
-            "valuesAsFlags": false
+            "valuesAsFlags": true
         }
     ]
 }

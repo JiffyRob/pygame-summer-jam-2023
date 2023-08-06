@@ -8,6 +8,7 @@ import asyncio
 import pygame
 
 import common
+import gui
 import player
 from bush import util
 from bush.ai import state
@@ -26,6 +27,8 @@ class Game:
         self.running = False
         self.stack = state.StateStack()
         self.player = player.Player(common.SCREEN_SIZE / 2)
+        self.dialog_group = pygame.sprite.GroupSingle()
+        self.gui_group = gui.UIGroup()
 
     def quit(self):
         self.running = False
@@ -47,12 +50,30 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
+                if event.type == common.DIALOG:
+                    rect = pygame.Rect(20, 0, common.SCREEN_SIZE[0] - 40, 64)
+                    rect.bottom = common.SCREEN_SIZE[1] - 20
+                    print(rect)
+                    self.dialog_group.add(
+                        gui.Dialog(
+                            event.prompt,
+                            event.answers,
+                            event.on_kill,
+                            rect,
+                            0,
+                            self.gui_group,
+                        )
+                    )
                 state.handle_event(event)
+                if self.dialog_group:
+                    self.dialog_group.sprite.pass_event(event)
 
             self.screen.fill(self.BG_COLOR)
 
             state.update(dt)
             state.draw(self.screen)
+            self.dialog_group.update(dt)
+            self.dialog_group.draw(self.screen)
 
             pygame.display.flip()
             await asyncio.sleep(0)

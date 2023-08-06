@@ -21,6 +21,7 @@ class Machinery(Pickup):
     def __init__(self, data):
         super().__init__(data)
         self.value = data.misc["value"]
+        print("this gadget is a", self.value)
 
     def pickup(self):
         if self.registry.get_group("player").sprite.get_machinery(self.value):

@@ -1,0 +1,31 @@
+# This is the tinker.  He takes the parts and builds the machine
+tech_found = "I found some old tech.";
+answer = dialog("Hey, what is it?", tech_found, "Never mind.");
+if answer == tech_found {
+    tech = take_machinery();
+    tech_found = 0;
+    if not tech {
+        dialog("Now, now, I can see that you don't.  Don't pull a fast one on yourold tinker.");
+    }
+    if tech & MACHINERY_1 {
+        tech_found = tech_found + 1;
+        dialog("I see that you have found an old DLC readout.  We need one of these for the biomass reader.");
+    }
+    if tech & MACHINERY_2 {
+        if tech_found {
+            dialog("Looks like you also have a CP-170 motherboard, and in good condition too.  Good find.");
+        }
+        if not tech_found {
+            dialog("Looks like you got a CP-170 motherboard.  We don't have the tooling to make these anymore");
+        }
+        tech_found = tech_found + 1;
+    }
+    if tech & MACHINERY_3 {
+         dialog("Where did you get this?  It's an old microscope lens from the Earthen days.  I didn't know any of these still existed.");
+         tech_found = tech_found + 1;
+    }
+    if tech {
+        dialog("Thanks for helping hunt stuff down.  I'll to fixing the thing as soon as I can");
+    }
+    fix_with_tech(tech);
+}

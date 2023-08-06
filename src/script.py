@@ -1,7 +1,26 @@
 import pygame
 
+import common
 import snek
 from bush import asset_handler, util
+
+
+class Dialog(snek.SnekCommand):
+    def __init__(self, prompt, *answers):
+        super().__init__()
+        pygame.event.post(
+            pygame.Event(
+                common.DIALOG,
+                {"prompt": prompt, "answers": answers, "on_kill": self.finish},
+            )
+        )
+        self.value = snek.UNFINISHED
+
+    def get_value(self):
+        return self.value
+
+    def finish(self, answer):
+        self.value = answer
 
 
 class Script:
@@ -11,11 +30,20 @@ class Script:
         self.registry = registry
         namespace = {
             "THIS": this,
+            "MACHINERY_1": common.Machinery.MACHINERY_1,
+            "MACHINERY_2": common.Machinery.MACHINERY_2,
+            "MACHINERY_3": common.Machinery.MACHINERY_3,
+            "MACHINERY_4": common.Machinery.MACHINERY_4,
         }
         api = {
             # player interaction
             "heal": snek.snek_command(self.registry.get_group("player").sprite.heal),
             "hurt": snek.snek_command(self.registry.get_group("player").sprite.hurt),
+            "dialog": Dialog,
+            "take_machinery": snek.snek_command(
+                self.registry.get_group("player").sprite.give_machinery
+            ),
+            "fix_with_tech": snek.snek_command(lambda tech: print("Fixing with", tech)),
             # vector operation
             "vec": snek.snek_command(lambda *args: pygame.Vector2(*args)),
             "norm": snek.snek_command(lambda vec: vec.copy() or vec.normalize()),
@@ -31,7 +59,7 @@ class Script:
                 lambda sprite_id: self.get_sprite(sprite_id).velocity
             ),
         }
-        self.program = snek.SNEKProgram(self.loader.load(script))
+        self.program = snek.SNEKProgram(self.loader.load(script), namespace, api)
 
     def get_sprite(self, sprite_id):
         return self.registry.get_group("scriptable").get_by_id(sprite_id)

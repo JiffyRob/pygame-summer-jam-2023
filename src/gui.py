@@ -7,7 +7,7 @@ from bush import asset_handler, event_binding, timer
 loader = asset_handler.glob_loader
 
 UI_FONT = pygame.font.Font(
-    asset_handler.join(loader.base, "hud/TeenyTinyPixls.ttf"), 18
+    asset_handler.join(loader.base, "hud/TeenyTinyPixls.ttf"), 12
 )
 
 NUMBER_FONT = pygame.font.Font(
@@ -363,7 +363,6 @@ class Dialog(UIElement):
         pygame.draw.rect(self.image, BORDER_COLOR, ((0, 0), self.rect.size), 1)
 
     def choose(self):
-        print("chosen")
         self.chosen_index = self.answer_index
         self.state = STATE_COMPLETE
         self.kill()
@@ -381,18 +380,17 @@ class Dialog(UIElement):
 
     def pass_event(self, event):
         if self.state == STATE_GETTING_ANSWER:
-            if event.type == event_binding.BOUND_EVENT:
-                if event.name == "dialog pointer up":
-                    self.answer_index = max(self.answer_index - 1, 0)
-                    self.update_text()
-                if event.name == "dialog pointer down":
+            match event:
+                case pygame.Event(type=pygame.KEYDOWN, key=pygame.K_DOWN):
                     self.answer_index = min(
                         self.answer_index + 1, len(self.answers) - 1
                     )
                     self.update_text()
-                if event.name == "dialog select":
+                case pygame.Event(type=pygame.KEYDOWN, key=pygame.K_UP):
+                    self.answer_index = max(self.answer_index - 1, 0)
+                    self.update_text()
+                case pygame.Event(type=pygame.KEYDOWN, key=pygame.K_SPACE):
                     self.choose()
         if self.state == STATE_COMPLETE and not self.answers:
-            if event.type == event_binding.BOUND_EVENT:
-                if event.name == "dialog select":
-                    self.choose()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.choose()

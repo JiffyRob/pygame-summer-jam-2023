@@ -3,6 +3,7 @@ import pygame
 import arg
 import common
 import enemy
+import npc
 import pickup
 import player
 import puzzle
@@ -27,6 +28,7 @@ class MapLoader(mapping.MapLoader):
             "fish": enemy.Fish,
             "oxygen": pickup.Oxygen,
             "health": pickup.Health,
+            "npc": npc.NPC,
         }
         self.default_player_layer = 4  # second layer (default sub)
         self.mask_loader = asset_handler.AssetHandler("masks")

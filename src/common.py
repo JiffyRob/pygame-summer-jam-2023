@@ -1,9 +1,7 @@
-from enum import Enum
-
 import pygame
 
 
-class Machinery(Enum):
+class Machinery:
     MACHINERY_1 = 1
     MACHINERY_2 = 2
     MACHINERY_3 = 4
@@ -43,3 +41,4 @@ SCREEN_SIZE = pygame.Vector2(320, 240)
 LAYER_UP = pygame.event.custom_type()
 LAYER_DOWN = pygame.event.custom_type()
 GAME_OVER = pygame.event.custom_type()
+DIALOG = pygame.event.custom_type()

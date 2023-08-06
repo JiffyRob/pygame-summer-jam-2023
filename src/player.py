@@ -112,6 +112,7 @@ class Player(game_object.MobileGameObject):
             self.kill()
 
     def give_machinery(self):
+        print("giving", self.machinery)
         value = self.machinery
         self.machinery = 0
         return value
@@ -157,7 +158,6 @@ class Player(game_object.MobileGameObject):
     def update(self, dt):
         self.handle_input()
         super().update(dt)
-        print(self.terrain)
         if self.terrain != "underwater":
             self.oxygen = self.max_oxygen
             for terrain in common.TERRAINS:
