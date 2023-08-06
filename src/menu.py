@@ -19,7 +19,7 @@ def create_menu(
     container_rect.center = screen_size / 2
     container = gui.BGRect(container_rect, 1, menu)
     height = 30
-    rect = pygame.Rect(0, 10, 100, height)
+    rect = pygame.Rect(0, 10, container_rect.width * 0.8, height)
     rect.centerx = container_rect.width / 2
     rect.topleft += pygame.Vector2(container_rect.topleft)
     gui.Text(menu_name, gui.ANCHOR_MIDTOP, rect, 2, menu)

@@ -97,7 +97,7 @@ class Player(game_object.MobileGameObject):
     def get_machinery(self, machinery):
         self.machinery |= machinery
         return True
-    
+
     def give_machinery(self):
         value = self.machinery
         self.machinery = 0

@@ -69,17 +69,17 @@ class PauseMenu(MenuState):
 
 class MainMenu(MenuState):
     def __init__(self):
-        self.button_list = ("Play", "Quit")
+        self.button_list = ("Play", "Exit")
         if util.is_pygbag():
             self.button_list = self.button_list[:-1]
         super().__init__(
             "MainMenu",
-            screen_surf=pygame.Surface(common.SCREEN_SIZE),
+            screen_surf=util.rect_surf((0, 0, *common.SCREEN_SIZE), "turquoise"),
         )
 
     def rebuild(self):
         self.gui = menu.create_menu(
-            "Tred's Adventure",
+            "Atlantica",
             self.button_list,
             [self.play, self.pop],
             common.SCREEN_SIZE,

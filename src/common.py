@@ -3,7 +3,7 @@ from enum import Enum
 import pygame
 
 
-class Machinery:
+class Machinery(Enum):
     MACHINERY_1 = 1
     MACHINERY_2 = 2
     MACHINERY_3 = 4

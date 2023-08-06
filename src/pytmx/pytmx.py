@@ -18,7 +18,6 @@ License along with pytmx.  If not, see <http://www.gnu.org/licenses/>.
 """
 from __future__ import annotations
 
-
 import gzip
 import logging
 import os
@@ -29,7 +28,7 @@ from collections import defaultdict, namedtuple
 from itertools import chain, product
 from math import cos, radians, sin
 from operator import attrgetter
-from typing import List, Tuple, Optional, Sequence, Union, Dict, Iterable
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
 from xml.etree import ElementTree
 
 # for type hinting
