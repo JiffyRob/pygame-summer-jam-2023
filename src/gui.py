@@ -132,61 +132,6 @@ class Descriptionbox(UIElement):
         self.last_text = self.text
 
 
-class ItemButton(UIElement):
-    def __init__(
-        self, item_name, item_count, on_click, description_box, rect, layer, group
-    ):
-        super().__init__(rect, layer, group)
-        self.name = item_name
-        self.count = item_count
-        self.on_click = on_click
-        self.description_box = description_box
-        # the bug net is not implemented (as of writing this comment), so it will be the debug item image
-        self.item_image = pygame.transform.scale(
-            ITEM_IMAGES.get(self.name, "bug net"), self.rect.size
-        )
-        self.count_image = NUMBER_FONT.render(str(self.count), False, TEXT_COLOR)
-        self.state = STATE_NORMAL
-        self.bg_images = [pygame.transform.scale(i, self.rect.size) for i in BG_IMAGES]
-        self.image = None
-        self.rebuild()
-
-    def rebuild(self):
-        self.image = self.bg_images[self.state].copy()
-        self.image.blit(self.item_image, (0, 0))
-        if self.count:
-            number_pos = (
-                pygame.Vector2(self.rect.size) - self.count_image.get_size() - (1, 1)
-            )
-            self.image.blit(self.count_image, number_pos)
-        # self.dirty = 1  # redraw
-
-    def pass_event(self, event):
-        if event.type == pygame.MOUSEMOTION:
-            if self.rect.collidepoint(event.pos):
-                if self.state == STATE_NORMAL:
-                    self.state = STATE_HOVERED
-                    self.description_box.set_text(self.name)
-                    self.rebuild()
-            elif self.state == STATE_HOVERED:
-                self.state = STATE_NORMAL
-                self.rebuild()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos) and event.button == 1:
-                self.state = STATE_CLICKED
-                self.on_click()
-                self.rebuild()
-
-        if event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                if self.rect.collidepoint(event.pos):
-                    self.state = STATE_HOVERED
-                    self.rebuild()
-                else:
-                    self.state = STATE_NORMAL
-                    self.rebuild()
-
-
 class Button(UIElement):
     def __init__(self, text, on_click, rect, layer, group):
         super().__init__(rect, layer, group)

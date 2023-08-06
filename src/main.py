@@ -47,7 +47,6 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
-                self.player.handle_event(event)
                 state.handle_event(event)
 
             self.screen.fill(self.BG_COLOR)

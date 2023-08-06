@@ -559,7 +559,6 @@ class TiledMap(TiledElement):
 
         # iterate through tile objects and handle the image
         for o in [o for o in self.objects if o.gid]:
-
             # gids might also have properties assigned to them
             # in that case, assign the gid properties to the object as well
             p = self.get_tile_properties_by_gid(o.gid)
@@ -586,7 +585,6 @@ class TiledMap(TiledElement):
 
         # iterate through tilesets to get source images
         for ts in self.tilesets:
-
             # skip tilesets without a source
             if ts.source is None:
                 continue
@@ -1115,7 +1113,6 @@ class TiledTileset(TiledElement):
         source = node.get("source", None)
         if source:
             if source[-4:].lower() == ".tsx":
-
                 # external tilesets don't save this, store it for later
                 self.firstgid = int(node.get("firstgid"))
 

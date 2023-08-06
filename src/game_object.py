@@ -37,6 +37,12 @@ class GameObject(entity.Actor):
         self.anim_dict = {}
         if anim_dict is not None:
             self.anim_dict = anim_dict
+        self.anim_dict = {
+            key: value
+            if isinstance(value, animation.Animation)
+            else animation.Animation([value])
+            for key, value in self.anim_dict.items()
+        }
         if initial_state is not None:
             self.state = initial_state
         elif self.anim_dict:
@@ -48,7 +54,7 @@ class GameObject(entity.Actor):
             self.physics_data = physics_data
         else:
             self.physics_data = physics.PhysicsData(
-                physics.TYPE_STATIC, pygame.sprite.Group()
+                physics.TYPE_STATIC, self.registry.get_group("collision")
             )
         self.current_health = start_health
         self.health_capacity = max_health
@@ -62,6 +68,7 @@ class GameObject(entity.Actor):
         self.visual_effects = []
         self.hit_effect = hit_effect
         self.script_stack = []
+        self.mask = pygame.Mask(self.rect.size, True)
 
     def get_anim_key(self):
         return self.state

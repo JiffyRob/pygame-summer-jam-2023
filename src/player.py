@@ -3,7 +3,7 @@ import pygame
 import arg
 import common
 import game_object
-from bush import physics, timer, util
+from bush import collision, physics, timer, util
 
 
 class Player(game_object.MobileGameObject):
@@ -20,24 +20,50 @@ class Player(game_object.MobileGameObject):
             physics.TYPE_DYNAMIC, pygame.sprite.Group()
         )
         self.collision_rect = self.rect.copy()
-        self.boost_cooldown = timer.Timer(600)
+        self.boost_cooldown = timer.Timer(300)
         self.boost_cooldown.finish()
+        self.interaction_cooldown = timer.Timer(300)
         self.map_cooldown = timer.Timer(700)
         self.slowed = False
         self.mask = pygame.Mask(self.rect.size, True)
+        self.interaction_rect = pygame.Rect(0, 0, 0, 0)
+        self.keys = 0
 
     def update_rects(self):
         self.rect.center = self.collision_rect.center = self.pos
-
-    def handle_event(self, event):
-        if event.type == pygame.KEYDOWN and self.boost_cooldown.done():
-            self.velocity += {
-                pygame.K_UP: pygame.Vector2(0, -1),
-                pygame.K_DOWN: pygame.Vector2(0, 1),
-                pygame.K_LEFT: pygame.Vector2(-1, 0),
-                pygame.K_RIGHT: pygame.Vector2(1, 0),
-            }.get(event.key, pygame.Vector2()) * common.TERRAINS[self.terrain]["boost"]
-            self.boost_cooldown.reset()
+        match self.facing:
+            case "up":
+                self.interaction_rect = pygame.Rect(
+                    self.rect.width,
+                    self.rect.width,
+                    self.rect.height / 2,
+                    self.rect.height / 2,
+                )
+                self.interaction_rect.midbottom = self.rect.midtop
+            case "down":
+                self.interaction_rect = pygame.Rect(
+                    self.rect.width,
+                    self.rect.width,
+                    self.rect.height / 2,
+                    self.rect.height / 2,
+                )
+                self.interaction_rect.midtop = self.rect.midbottom
+            case "left":
+                self.interaction_rect = pygame.Rect(
+                    self.rect.width / 2,
+                    self.rect.width / 2,
+                    self.rect.height,
+                    self.rect.height,
+                )
+                self.interaction_rect.midright = self.rect.midleft
+            case "right":
+                self.interaction_rect = pygame.Rect(
+                    self.rect.width / 2,
+                    self.rect.width / 2,
+                    self.rect.height,
+                    self.rect.height,
+                )
+                self.interaction_rect.midleft = self.rect.midright
 
     def up(self):
         if "water" in self.terrain and self.map_cooldown.done():
@@ -48,6 +74,30 @@ class Player(game_object.MobileGameObject):
         if "water" in self.terrain and self.map_cooldown.done():
             pygame.event.post(pygame.Event(common.LAYER_DOWN))
             self.map_cooldown.reset()
+
+    def interact(self):
+        def interaction_rect_collide(player, other):
+            return player.interaction_rect.colliderect(other.rect)
+
+        if self.interaction_cooldown.done():
+            sprite = pygame.sprite.spritecollideany(
+                self, self.registry.get_group("interactable"), interaction_rect_collide
+            )
+            if sprite is not None:
+                sprite.interact()
+                self.interaction_cooldown.reset()
+
+    def get_key(self):
+        if self.keys >= 3:
+            return False
+        self.keys += 1
+        return True
+
+    def lose_key(self):
+        if self.keys <= 0:
+            return False
+        self.keys -= 1
+        return True
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
@@ -67,7 +117,8 @@ class Player(game_object.MobileGameObject):
             self.up()
         if keys[pygame.K_LCTRL]:
             self.down()
-
+        if keys[pygame.K_SPACE]:
+            self.interact()
         traction = common.TERRAINS[self.terrain]["traction"]
         self.velocity = (self.desired_velocity * traction) + (
             self.velocity * (1 - traction)
@@ -88,6 +139,13 @@ class Player(game_object.MobileGameObject):
                 terrain_mask = self.registry.get_mask(terrain)
                 if terrain_mask.get_at(self.pos):
                     self.terrain = terrain
+        for pickup in pygame.sprite.spritecollide(
+            self,
+            self.registry.get_group("pickups"),
+            False,
+            pygame.sprite.collide_rect_ratio(0.8),
+        ):
+            pickup.pickup()
 
     def reset(self, pos, layer, registry, underwater):
         self.pos = pos

@@ -18,6 +18,9 @@ class MapLoader(mapping.MapLoader):
             "eel": enemy.EelHead,
             "pushblock": puzzle.Pushblock,
             "conveyor": puzzle.Drifter,
+            "door": puzzle.Door,
+            "pressure-plate": puzzle.PressurePlate,
+            "key": puzzle.Key,
         }
         self.default_player_layer = 4  # second layer (default sub)
         self.mask_loader = asset_handler.AssetHandler("masks")
@@ -39,7 +42,9 @@ class MapLoader(mapping.MapLoader):
                 "collision": lambda x: pygame.sprite.Group(),
                 "scriptable": lambda x: group.EntityGroup(),
                 "interactable": lambda x: pygame.sprite.Group(),
+                "communicators": lambda x: group.EntityGroup(),
                 "enemies": lambda x: pygame.sprite.Group(),
+                "pickups": lambda x: pygame.sprite.Group(),
             },
         )
 
