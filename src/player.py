@@ -29,6 +29,8 @@ class Player(game_object.MobileGameObject):
         self.interaction_rect = pygame.Rect(0, 0, 0, 0)
         self.keys = 0
         self.machinery = 0
+        self.oxygen = self.max_oxygen = 1000
+        self.oxygen_timer = timer.Timer(100, self.lower_oxygen, True)
 
     def update_rects(self):
         self.rect.center = self.collision_rect.center = self.pos
@@ -99,8 +101,15 @@ class Player(game_object.MobileGameObject):
         return True
 
     def refill_oxygen(self):
-        print("breathe")
+        if self.oxygen >= self.max_oxygen:
+            return False
+        self.oxygen = self.max_oxygen
         return True
+
+    def lower_oxygen(self):
+        self.oxygen = max(0, self.oxygen - 1)
+        if not self.oxygen:
+            self.kill()
 
     def give_machinery(self):
         value = self.machinery
@@ -148,11 +157,15 @@ class Player(game_object.MobileGameObject):
     def update(self, dt):
         self.handle_input()
         super().update(dt)
+        print(self.terrain)
         if self.terrain != "underwater":
+            self.oxygen = self.max_oxygen
             for terrain in common.TERRAINS:
                 terrain_mask = self.registry.get_mask(terrain)
                 if terrain_mask.get_at(self.pos):
                     self.terrain = terrain
+        else:
+            self.oxygen_timer.update()
         for pickup in pygame.sprite.spritecollide(
             self,
             self.registry.get_group("pickups"),
@@ -171,7 +184,7 @@ class Player(game_object.MobileGameObject):
         self.physics_data = physics.PhysicsData(
             physics.TYPE_DYNAMIC, self.registry.get_group("collision")
         )
-        self.terrain = (self.terrain, "water")[underwater]
+        self.terrain = ("water", "underwater")[underwater]
 
     def new_game(self):
         self.heal(100000)

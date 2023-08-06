@@ -255,35 +255,49 @@ class HeartMeter(UIElement):
             self.rebuild()
 
 
-class MagicMeter(UIElement):
-    def __init__(self, sprite, rect, layer, group):
+class BarMeter(UIElement):
+    THEME = {
+        "outline_color": (156, 101, 70),
+        "outline_width": 1,
+        "roundness": 2,
+        "background": (255, 255, 0),
+        "colorkey": (255, 255, 0),
+        "bar_color": (255, 0, 0),
+    }
+
+    def __init__(self, getter, rect, layer, group, **theme):
         super().__init__(rect, layer, group)
-        self.sprite_to_monitor = sprite
-        self.current_data = None
+        self.getter = getter
+        self.current_data = getter()
         self.last_data = None
+        self.theme = {**self.THEME, **theme}
         self.rebuild()
 
     def rebuild(self):
-        self.image.fill(BLACK)
-        pygame.draw.rect(self.image, (156, 101, 70), ((0, 0), self.rect.size), 1)
-        percent_full = (
-            self.sprite_to_monitor.current_mana / self.sprite_to_monitor.mana_capacity
+        self.image.set_colorkey(self.theme["colorkey"])
+        self.image.fill(self.theme["background"])
+        pygame.draw.rect(
+            self.image,
+            self.theme["outline_color"],
+            ((0, 0), self.rect.size),
+            self.theme["outline_width"],
+            self.theme["roundness"],
         )
+        amount, capacity = self.current_data
+        percent_full = amount / capacity
         fill_rect = pygame.Rect(
-            1, 1, percent_full * (self.rect.width - 2), self.rect.height - 2
+            1,
+            1,
+            percent_full * (self.rect.width - self.theme["outline_width"] * 2),
+            self.rect.height - self.theme["outline_width"] * 2,
         )
-        pygame.draw.rect(self.image, (116, 163, 52), fill_rect)
-        self.last_data = (
-            self.sprite_to_monitor.current_mana,
-            self.sprite_to_monitor.mana_capacity,
-        )
+        pygame.draw.rect(self.image, self.theme["bar_color"], fill_rect)
+        self.last_data = (amount, capacity)
 
     def update(self, dt):
         super().update(dt)
-        self.current_data = (
-            self.sprite_to_monitor.current_mana,
-            self.sprite_to_monitor.mana_capacity,
-        )
+
+        self.current_data = self.getter()
         if self.current_data != self.last_data:
             self.rebuild()
 

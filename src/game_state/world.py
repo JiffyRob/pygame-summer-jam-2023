@@ -6,7 +6,6 @@ import common
 import gui
 import map_loader
 from bush import event_binding, particle, timer, util
-from bush.mapping import world
 from game_state import base, ui
 
 map_loader = map_loader.MapLoader()
@@ -22,7 +21,20 @@ class MapState(base.GameState):
             self.music_player.play(self.soundtrack)
         hud = gui.UIGroup()
         player = registry.get_group("player").sprite
-        gui.HeartMeter(player, pygame.Rect(8, 8, 192, 64), 1, hud)
+        gui.BarMeter(
+            lambda: (player.current_health, player.health_capacity),
+            pygame.Rect(4, 4, 64, 6),
+            1,
+            hud,
+            bar_color="green",
+        )
+        gui.BarMeter(
+            lambda: (player.oxygen, player.max_oxygen),
+            pygame.Rect(4, 12, 48, 6),
+            1,
+            hud,
+            bar_color="white",
+        )
         super().__init__(filename, gui=hud)
         self.filename = filename
         self.above = above
