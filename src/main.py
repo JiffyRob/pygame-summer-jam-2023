@@ -1,3 +1,4 @@
+import sound
 from bush import asset_handler
 
 asset_handler.AssetHandler.set_global_home("assets")
@@ -29,6 +30,7 @@ class Game:
         self.player = player.Player(common.SCREEN_SIZE / 2)
         self.dialog_group = pygame.sprite.GroupSingle()
         self.gui_group = gui.UIGroup()
+        self.sound_manager = sound.SoundManager(asset_handler.AssetHandler("music"), 3)
 
     def quit(self):
         self.running = False
@@ -68,6 +70,19 @@ class Game:
                     self.stack.push(ui.PauseMenu(self.screen.copy()))
                 if event.type == common.GAME_START:
                     world.switch_map(self.stack, "test.tmx", pop=False)
+                if event.type == common.TRACK_SWITCH:
+                    self.sound_manager.switch_track(
+                        event.path, event.volume, -1, 0, 1000
+                    )
+                if event.type == common.PLAY_SOUND:
+                    self.sound_manager.play_sound(
+                        event.path,
+                        event.priority,
+                        event.loops,
+                        event.volume,
+                        event.fade,
+                        event.location,
+                    )
                 state.handle_event(event)
                 if self.dialog_group:
                     self.dialog_group.sprite.pass_event(event)

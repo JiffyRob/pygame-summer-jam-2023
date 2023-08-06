@@ -44,3 +44,26 @@ GAME_START = pygame.event.custom_type()
 GAME_OVER = pygame.event.custom_type()
 PAUSE = pygame.event.custom_type()
 DIALOG = pygame.event.custom_type()
+
+TRACK_SWITCH = pygame.event.custom_type()
+PLAY_SOUND = pygame.event.custom_type()
+
+
+def play_sound(path, priority=10, loops=0, volume=1, fade=0, location=(0, 0)):
+    pygame.event.post(
+        pygame.Event(
+            PLAY_SOUND,
+            {
+                "path": path,
+                "priority": priority,
+                "loops": loops,
+                "volume": volume,
+                "fade": fade,
+                "location": location,
+            },
+        )
+    )
+
+
+def switch_track(path, volume=1):
+    pygame.event.post(pygame.Event(TRACK_SWITCH, {"path": path, "volume": volume}))

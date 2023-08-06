@@ -102,4 +102,7 @@ def switch_map(stack, name, player_pos=None, pop=True):
             properties.get("below", None),
         )
     )
+    track = properties.get("track", None)
+    if track is not None:
+        common.switch_track(track)
     return registry, properties

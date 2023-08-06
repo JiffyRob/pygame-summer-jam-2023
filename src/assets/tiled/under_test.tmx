@@ -2,6 +2,7 @@
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="30">
  <properties>
   <property name="above" value="test.tmx"/>
+  <property name="track" value="undersea.wav"/>
   <property name="underwater" type="bool" value="true"/>
  </properties>
  <tileset firstgid="1" source="placeholder_tiles.tsx"/>
