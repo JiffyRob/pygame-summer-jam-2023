@@ -9,17 +9,11 @@ ITEM_IMAGES = dict(
 )
 
 TERRAINS = {
-    "metal": {
-        "speed": 70,
-        "traction": 1,
-        "boost": 0,
-        "flow": pygame.Vector2(),
-    },
-    "land": {
-        "speed": 64,  # basic speed
-        "traction": 0.7,  # ability to change direction
-        "boost": 16,  # extra burst of speed applied on keydown
-        "flow": pygame.Vector2(),  # "gravity" toward a certain direction
+    "underwater": {
+        "speed": 32,
+        "traction": 0.1,
+        "boost": 48,
+        "flow": pygame.Vector2(-0.4, 0),
     },
     "water": {
         "speed": 12,
@@ -27,11 +21,17 @@ TERRAINS = {
         "boost": 48,
         "flow": pygame.Vector2(-0.4, 0),
     },
-    "underwater": {
-        "speed": 32,
-        "traction": 0.1,
-        "boost": 48,
-        "flow": pygame.Vector2(-0.4, 0),
+    "land": {
+        "speed": 24,  # basic speed
+        "traction": 0.7,  # ability to change direction
+        "boost": 16,  # extra burst of speed applied on keydown
+        "flow": pygame.Vector2(),  # "gravity" toward a certain direction
+    },
+    "metal": {
+        "speed": 30,
+        "traction": 1,
+        "boost": 0,
+        "flow": pygame.Vector2(),
     },
     "null": {"speed": 32, "traction": 1, "boost": 0, "flow": pygame.Vector2()},
 }

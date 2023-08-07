@@ -1,12 +1,9 @@
 import pygame
 
 import common
-import map_loader
 import menu
 from bush import util
 from game_state import base
-
-map_loader = map_loader.MapLoader()
 
 
 class MenuState(base.GameState):

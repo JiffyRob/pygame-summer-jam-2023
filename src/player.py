@@ -3,7 +3,7 @@ import pygame
 import arg
 import common
 import game_object
-from bush import collision, physics, timer, util
+from bush import physics, timer, util, asset_handler, animation
 
 
 class Player(game_object.MobileGameObject):
@@ -13,8 +13,38 @@ class Player(game_object.MobileGameObject):
     registry_groups = ()
 
     def __init__(self, pos):
-        data = arg.GameObjectArgs(pos, surface=util.rect_surf((0, 0, 16, 16), "red"))
-        super().__init__(data, start_health=12, max_health=12)
+        walk_frames = asset_handler.glob_loader.load_spritesheet(
+            "main-walk.png", (16, 16)
+        )
+        swim_frames = asset_handler.glob_loader.load_spritesheet(
+            "main-swim.png", (16, 16)
+        )
+        anim_dict = {
+            "swim idle down": swim_frames[0],
+            "swim idle right": swim_frames[1],
+            "swim idle left": pygame.transform.flip(swim_frames[2], True, False),
+            "swim idle up": swim_frames[2],
+            "swim walk down": animation.Animation(swim_frames[4:8]),
+            "swim walk right": animation.Animation(swim_frames[8:12]),
+            "swim walk left": animation.Animation(swim_frames[8:12], mirror_x=True),
+            "swim walk up": animation.Animation(swim_frames[12:16]),
+            "idle down": walk_frames[1],
+            "idle right": walk_frames[5],
+            "idle left": pygame.transform.flip(walk_frames[9], True, False),
+            "idle up": walk_frames[9],
+            "walk down": animation.Animation(walk_frames[0:4], 150),
+            "walk right": animation.Animation(walk_frames[4:8], 150),
+            "walk left": animation.Animation(walk_frames[4:8], 150, mirror_x=True),
+            "walk up": animation.Animation(walk_frames[8:12], 150),
+        }
+        data = arg.GameObjectArgs(pos)
+        super().__init__(
+            data,
+            anim_dict=anim_dict,
+            start_health=12,
+            max_health=12,
+            initial_state="idle down",
+        )
         self.terrain = "water"
         self.physics_data = physics.PhysicsData(
             physics.TYPE_DYNAMIC, pygame.sprite.Group()
@@ -31,6 +61,17 @@ class Player(game_object.MobileGameObject):
         self.machinery = []
         self.oxygen = self.max_oxygen = 1000
         self.oxygen_timer = timer.Timer(100, self.lower_oxygen, True)
+
+    def get_anim_key(self):
+        state = ""
+        if "water" in self.terrain:
+            state += "swim "
+        if self.desired_velocity:
+            state += "walk "
+        else:
+            state += "idle "
+        state += self.facing
+        return state
 
     def update_rects(self):
         self.rect.center = self.collision_rect.center = self.pos
@@ -165,6 +206,7 @@ class Player(game_object.MobileGameObject):
     def kill(self, game_over=True):
         if game_over:
             pygame.event.post(pygame.Event(common.GAME_OVER))
+            self.new_game()  # reset stats early
         else:
             super().kill()
 
@@ -202,4 +244,4 @@ class Player(game_object.MobileGameObject):
     def new_game(self):
         self.heal(100000)
         self.keys = 0
-        self.machinery = 0
+        self.machinery = []

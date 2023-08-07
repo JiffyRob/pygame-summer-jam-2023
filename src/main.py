@@ -19,7 +19,7 @@ from game_state import ui, world
 class Game:
     FLAGS = pygame.SCALED | pygame.RESIZABLE
     BG_COLOR = "blue"
-    FPS = 30 * (not util.is_pygbag())
+    FPS = 30
     VSYNC = 1
 
     def __init__(self):
@@ -27,7 +27,6 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = False
         self.stack = state.StateStack()
-        self.player = player.Player(common.SCREEN_SIZE / 2)
         self.dialog_group = pygame.sprite.GroupSingle()
         self.gui_group = gui.UIGroup()
         self.sound_manager = sound.SoundManager(asset_handler.AssetHandler("music"), 3)

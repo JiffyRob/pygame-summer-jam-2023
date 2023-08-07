@@ -22,18 +22,6 @@ class GameObject(entity.Actor):
         immunity=150,
         hit_effect=None,
     ):
-        surface = data.surface
-        if surface is None and anim_dict is not None:
-            surface = anim_dict[min(anim_dict.keys())].image()
-        super().__init__(
-            data.pos,
-            surface,
-            (data.registry.get_group(i) for i in self.registry_groups),
-            data.id,
-            data.layer,
-            data.topleft,
-        )
-        self.registry = data.registry
         self.anim_dict = {}
         if anim_dict is not None:
             self.anim_dict = anim_dict
@@ -43,6 +31,18 @@ class GameObject(entity.Actor):
             else animation.Animation([value])
             for key, value in self.anim_dict.items()
         }
+        surface = data.surface
+        if surface is None and anim_dict is not None:
+            surface = self.anim_dict[min(anim_dict.keys())].image()
+        super().__init__(
+            data.pos,
+            surface,
+            (data.registry.get_group(i) for i in self.registry_groups),
+            data.id,
+            data.layer,
+            data.topleft,
+        )
+        self.registry = data.registry
         if initial_state is not None:
             self.state = initial_state
         elif self.anim_dict:

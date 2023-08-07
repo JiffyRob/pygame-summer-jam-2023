@@ -8,13 +8,11 @@ import pickup
 import player
 import puzzle
 import pytmx
-from bush import asset_handler, entity, physics
+from bush import asset_handler, entity, physics, animation
 from bush.mapping import group, mapping
 
 
 class MapLoader(mapping.MapLoader):
-    player = player.Player(common.SCREEN_SIZE / 2)
-
     def __init__(self):
         self.sprite_classes = {
             "eel": enemy.EelHead,
@@ -30,6 +28,7 @@ class MapLoader(mapping.MapLoader):
             "health": pickup.Health,
             "npc": npc.NPC,
         }
+        self.player = None
         self.default_player_layer = 4  # second layer (default sub)
         self.mask_loader = asset_handler.AssetHandler("masks")
         self.map_size = None
@@ -58,7 +57,13 @@ class MapLoader(mapping.MapLoader):
 
     def handle_tile(self, tile, sprite_group):
         terrain = tile.properties.get("terrain", None)
-        mask = tile.properties.get("mask", None) or pygame.mask.from_surface(tile.image)
+        if tile.image is None:
+            tile_image = pygame.Surface((0, 0))
+        elif isinstance(tile.image, animation.Animation):
+            tile_image = tile.image.image()
+        else:
+            tile_image = tile.image
+        mask = tile.properties.get("mask", None) or pygame.mask.from_surface(tile_image)
         if terrain:
             if terrain not in self.current_registry.list_masks():
                 self.current_registry.add_mask(terrain, pygame.Mask(self.map_size))
@@ -109,6 +114,7 @@ class MapLoader(mapping.MapLoader):
         )
 
     def load(self, tmx_map, player_pos=None):
+        self.player = self.player or player.Player(common.SCREEN_SIZE)
         if not isinstance(tmx_map, pytmx.TiledMap):
             tmx_map = self.loader.load(tmx_map, self.cache_files)
         self.map_size = pygame.Vector2(
@@ -131,7 +137,7 @@ class MapLoader(mapping.MapLoader):
         )
         self.current_registry.get_group("main").add(sprite_group)
 
-        # physics.optimize_for_physics(self.current_registry.get_group("collision"))
+        physics.optimize_for_physics(self.current_registry.get_group("collision"))
         for key in common.TERRAINS:
             if key not in self.current_registry.list_masks():
                 self.current_registry.add_mask(key, pygame.Mask(self.map_size))
