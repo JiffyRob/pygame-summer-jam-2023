@@ -1,9 +1,11 @@
+import itertools
+import random
+
+import pygame
+
 import common
 import game_object
-import itertools
-import pygame
 from bush import timer
-import random
 
 
 class Pickup(game_object.GameObject):

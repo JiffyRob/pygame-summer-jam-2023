@@ -3,7 +3,7 @@ import pygame
 import arg
 import common
 import game_object
-from bush import physics, timer, util, asset_handler, animation
+from bush import animation, asset_handler, physics, timer, util
 
 
 class Player(game_object.MobileGameObject):
@@ -22,7 +22,7 @@ class Player(game_object.MobileGameObject):
         anim_dict = {
             "swim idle down": swim_frames[0],
             "swim idle right": swim_frames[1],
-            "swim idle left": pygame.transform.flip(swim_frames[2], True, False),
+            "swim idle left": pygame.transform.flip(swim_frames[1], True, False),
             "swim idle up": swim_frames[2],
             "swim walk down": animation.Animation(swim_frames[4:8]),
             "swim walk right": animation.Animation(swim_frames[8:12]),
@@ -61,6 +61,9 @@ class Player(game_object.MobileGameObject):
         self.machinery = []
         self.oxygen = self.max_oxygen = 1000
         self.oxygen_timer = timer.Timer(100, self.lower_oxygen, True)
+        self.push_directions = [
+            util.string_direction_to_vec(i) for i in ("up", "down", "left", "right")
+        ]
 
     def get_anim_key(self):
         state = ""

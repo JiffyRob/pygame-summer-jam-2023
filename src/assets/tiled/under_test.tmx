@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="30">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="48">
  <properties>
   <property name="above" value="test.tmx"/>
   <property name="track" value="undersea.wav"/>
   <property name="underwater" type="bool" value="true"/>
  </properties>
  <tileset firstgid="1" source="placeholder_tiles.tsx"/>
+ <tileset firstgid="7" source="puzzle.tsx"/>
  <layer id="1" name="Tile Layer 1" width="40" height="40">
   <data encoding="csv">
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
@@ -52,34 +53,26 @@
  </layer>
  <objectgroup id="2" name="Object Layer 1">
   <object id="1" type="eel" gid="6" x="48" y="144" width="16" height="16"/>
-  <object id="13" type="pushblock" gid="4" x="144" y="32" width="16" height="16"/>
-  <object id="14" type="pushblock" gid="4" x="144" y="48" width="16" height="16"/>
+  <object id="14" name="block1" type="pushblock" gid="44" x="112" y="64" width="16" height="16">
+   <properties>
+    <property name="push_directions" value="left, right"/>
+    <property name="start_state" type="bool" value="false"/>
+   </properties>
+  </object>
   <object id="15" type="conveyor" gid="6" x="144" y="112" width="16" height="16">
    <properties>
     <property name="direction" value="60, 0"/>
    </properties>
   </object>
-  <object id="16" type="door" gid="6" x="240" y="64" width="16" height="16"/>
-  <object id="17" type="door" gid="6" x="256" y="64" width="16" height="16">
+  <object id="19" type="pressure-plate" gid="6" x="48" y="64" width="16" height="16">
    <properties>
-    <property name="lock" value="key"/>
-   </properties>
-  </object>
-  <object id="18" name="door1" type="door" gid="6" x="272" y="64" width="16" height="16">
-   <properties>
-    <property name="lock" value="trigger"/>
-   </properties>
-  </object>
-  <object id="19" type="pressure-plate" gid="6" x="256" y="96" width="16" height="16">
-   <properties>
-    <property name="receivers" value="door1"/>
+    <property name="receivers" value="block1"/>
    </properties>
   </object>
   <object id="21" type="key" gid="6" x="320" y="112" width="16" height="16"/>
-  <object id="22" name="door2" type="door" gid="6" x="288" y="64" width="16" height="16"/>
-  <object id="23" type="switch" gid="6" x="144" y="80" width="16" height="16">
+  <object id="23" type="switch" gid="15" x="144" y="64" width="16" height="16">
    <properties>
-    <property name="receivers" value="door2, door1"/>
+    <property name="receivers" value="portal1"/>
    </properties>
   </object>
   <object id="24" type="machinery" gid="3" x="192" y="144" width="16" height="16">
@@ -96,5 +89,47 @@
    </properties>
   </object>
   <object id="29" type="key" gid="6" x="64" y="176" width="16" height="16"/>
+  <object id="30" name="portal1end" type="zap-portal" gid="21" x="128" y="16" width="16" height="16">
+   <properties>
+    <property name="facing" value="left"/>
+    <property name="receivers" value="portal1"/>
+   </properties>
+  </object>
+  <object id="31" name="portal1" type="zap-portal" gid="21" x="48" y="16" width="16" height="16">
+   <properties>
+    <property name="facing" value="right"/>
+    <property name="receivers" value="zap1a, zap1b, zap1c, zap1d, portal1end"/>
+   </properties>
+  </object>
+  <object id="32" name="zap1d" type="zap" gid="31" x="112" y="16" width="16" height="16"/>
+  <object id="33" name="zap1c" type="zap" gid="31" x="96" y="16" width="16" height="16"/>
+  <object id="34" name="zap1b" type="zap" gid="31" x="80" y="16" width="16" height="16"/>
+  <object id="35" name="zap1a" type="zap" gid="31" x="64" y="16" width="16" height="16"/>
+  <object id="36" type="pushblock" gid="9" x="144" y="48" width="16" height="16"/>
+  <object id="38" type="pushblock" gid="9" x="112" y="48" width="16" height="16"/>
+  <object id="39" type="lock" gid="17" x="224" y="80" width="16" height="16">
+   <properties>
+    <property name="receivers" value="portal2"/>
+   </properties>
+  </object>
+  <object id="40" name="portal2" type="zap-portal" gid="11" x="240" y="48" width="16" height="16">
+   <properties>
+    <property name="facing" value="down"/>
+    <property name="lock" value="trigger"/>
+    <property name="receivers" value="zap2a, zap2b, zap2c, zap2d, zap2e, portal2b"/>
+   </properties>
+  </object>
+  <object id="42" name="zap2a" type="zap" gid="23" x="240" y="64" width="16" height="16"/>
+  <object id="43" name="zap2b" type="zap" gid="23" x="240" y="80" width="16" height="16"/>
+  <object id="44" name="zap2c" type="zap" gid="23" x="240" y="96" width="16" height="16"/>
+  <object id="45" name="zap2d" type="zap" gid="23" x="240" y="112" width="16" height="16"/>
+  <object id="46" name="zap2e" type="zap" gid="23" x="240" y="128" width="16" height="16"/>
+  <object id="47" name="portal2b" type="zap-portal" gid="11" x="240" y="144" width="16" height="16">
+   <properties>
+    <property name="facing" value="up"/>
+    <property name="lock" value="trigger"/>
+    <property name="receivers" value="portal2"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

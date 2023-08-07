@@ -1,4 +1,5 @@
 import pygame
+
 from bush import asset_handler
 
 ITEM_IMAGES = dict(

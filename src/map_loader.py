@@ -8,7 +8,7 @@ import pickup
 import player
 import puzzle
 import pytmx
-from bush import asset_handler, entity, physics, animation
+from bush import animation, asset_handler, entity, physics
 from bush.mapping import group, mapping
 
 
@@ -18,7 +18,6 @@ class MapLoader(mapping.MapLoader):
             "eel": enemy.EelHead,
             "pushblock": puzzle.Pushblock,
             "conveyor": puzzle.Drifter,
-            "door": puzzle.Door,
             "pressure-plate": puzzle.PressurePlate,
             "key": pickup.Key,
             "switch": puzzle.Switch,
@@ -27,6 +26,9 @@ class MapLoader(mapping.MapLoader):
             "oxygen": pickup.Oxygen,
             "health": pickup.Health,
             "npc": npc.NPC,
+            "zap-portal": puzzle.ZapPortal,
+            "zap": puzzle.Zap,
+            "lock": puzzle.Lock,
         }
         self.player = None
         self.default_player_layer = 4  # second layer (default sub)

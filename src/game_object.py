@@ -83,7 +83,6 @@ class GameObject(entity.Actor):
         return True
 
     def hurt(self, amount):
-        print("ouch!", self, amount)
         if self.immunity_timer.done():
             self.current_health -= amount
             if self.current_health <= 0:
@@ -217,8 +216,7 @@ class MobileGameObject(GameObject):
         self.update_rects()
 
     def update_rects(self):
-        self.collision_rect.center = self.pos
-        self.rect.center = self.pos
+        self.collision_rect.center = self.rect.center = self.pos
 
     def update_environment(self):
         if not self.terrain == "underwater":
@@ -230,20 +228,21 @@ class MobileGameObject(GameObject):
         return f"{self.state} {self.facing}"
 
     def update_physics(self, dt):
-        self.desired_velocity *= self.mobile
-        if self.slowed:
-            self.desired_velocity *= 0.7
-            self.slowed = False
-        # slippety-slide!
-        traction = common.TERRAINS[self.terrain]["traction"]
-        self.velocity = (
-            (self.desired_velocity * traction)
-            + self.velocity * (1 - traction)
-            + self.drift_veloc
-        )
-        self.drift_veloc *= 0
+        if self.physics_data.type == physics.TYPE_DYNAMIC:
+            self.desired_velocity *= self.mobile
+            if self.slowed:
+                self.desired_velocity *= 0.7
+                self.slowed = False
+            # slippety-slide!
+            traction = common.TERRAINS[self.terrain]["traction"]
+            self.velocity = (
+                (self.desired_velocity * traction)
+                + self.velocity * (1 - traction)
+                + self.drift_veloc
+            )
+            self.drift_veloc *= 0
 
-        physics.dynamic_update(self, dt)
+            physics.dynamic_update(self, dt)
         self.update_rects()
 
 

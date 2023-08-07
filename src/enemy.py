@@ -4,7 +4,7 @@ import pygame
 
 import arg
 import game_object
-from bush import timer, util, asset_handler
+from bush import asset_handler, timer, util
 
 
 class Enemy(game_object.MobileGameObject):
@@ -69,7 +69,6 @@ class EelHead(Enemy):
         self.terrain = "null"
 
     def turn(self):
-        print("turn", self.turn_type)
         if random.randint(0, 1):
             self.turn_type = self.TTYPE_RANDOM
             self.turn_speed = random.random() * random.choice(
