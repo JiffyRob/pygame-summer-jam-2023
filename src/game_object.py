@@ -212,6 +212,7 @@ class MobileGameObject(GameObject):
 
     def update(self, dt):
         self.update_environment()
+        self.desired_velocity *= self.mobile
         super().update(dt)
         self.update_rects()
 
@@ -220,6 +221,7 @@ class MobileGameObject(GameObject):
 
     def update_environment(self):
         if not self.terrain == "underwater":
+            self.terrain = "water"
             for key in common.TERRAINS:
                 if self.registry.get_mask(key).get_at(self.pos):
                     self.terrain = key

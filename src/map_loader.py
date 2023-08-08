@@ -8,8 +8,9 @@ import pickup
 import player
 import puzzle
 import pytmx
+import teleport
 from bush import animation, asset_handler, entity, physics
-from bush.mapping import group, mapping
+from bush.mapping import group, mapping, parallax
 
 
 class MapLoader(mapping.MapLoader):
@@ -25,10 +26,12 @@ class MapLoader(mapping.MapLoader):
             "fish": enemy.Fish,
             "oxygen": pickup.Oxygen,
             "health": pickup.Health,
-            "npc": npc.NPC,
             "zap-portal": puzzle.ZapPortal,
             "zap": puzzle.Zap,
             "lock": puzzle.Lock,
+            "old-man": npc.OldMan,
+            "tinker": npc.Tinker,
+            "teleport": teleport.Teleport,
         }
         self.player = None
         self.default_player_layer = 4  # second layer (default sub)
@@ -71,11 +74,12 @@ class MapLoader(mapping.MapLoader):
                 self.current_registry.add_mask(terrain, pygame.Mask(self.map_size))
             self.current_registry.get_mask(terrain).draw(mask, tile.pos)
         groups = tile.properties.get("groups", "main").split(", ")
+        sprite_groups = [self.current_registry.get_group(i) for i in groups]
         if groups:
             sprite = entity.Entity(
                 tile.pos,
                 pygame.Surface((16, 16), pygame.SRCALPHA),
-                [self.current_registry.get_group(group_key) for group_key in groups],
+                sprite_groups,
                 topleft=True,
                 no_debug=True,
             )
@@ -135,7 +139,7 @@ class MapLoader(mapping.MapLoader):
             player_pos,
             properties.get("player_layer", self.default_player_layer),
             self.current_registry,
-            properties.get("underwater", True),
+            properties.get("type", "inside") == "underwater",
         )
         self.current_registry.get_group("main").add(sprite_group)
 
@@ -143,4 +147,19 @@ class MapLoader(mapping.MapLoader):
         for key in common.TERRAINS:
             if key not in self.current_registry.list_masks():
                 self.current_registry.add_mask(key, pygame.Mask(self.map_size))
-        return (self.current_registry, properties)
+
+        tiles = self.loader.load_spritesheet("tileset.png", (16, 16))
+        map_type = properties.get("type")
+        image = None
+        if map_type == "overworld":
+            image = animation.Animation(tiles[100:104] + tiles[116:120], 100)
+        if map_type == "underwater":
+            image = tiles[39]
+        bg = entity.Entity((0, 0))
+        if image:
+            bg = parallax.LoopedSurface(image, 0.75, self.map_size, layer=-1)
+        return (
+            self.current_registry,
+            properties,
+            bg,
+        )

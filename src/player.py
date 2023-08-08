@@ -37,7 +37,7 @@ class Player(game_object.MobileGameObject):
             "walk left": animation.Animation(walk_frames[4:8], 150, mirror_x=True),
             "walk up": animation.Animation(walk_frames[8:12], 150),
         }
-        data = arg.GameObjectArgs(pos)
+        data = arg.GameObjectArgs(pos, id="player")
         super().__init__(
             data,
             anim_dict=anim_dict,

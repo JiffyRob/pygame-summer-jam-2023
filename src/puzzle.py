@@ -235,6 +235,7 @@ class Zap(BiStateCommunicator):
                 physics.TYPE_DYNAMIC, data.registry.get_group("collision")
             ),
         )
+        self.mask = pygame.mask.from_surface(self.image)
 
     def on_collision(self, other, dt):
         if not self.state:

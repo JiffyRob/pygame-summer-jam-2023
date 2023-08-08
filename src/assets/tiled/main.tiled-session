@@ -8,43 +8,115 @@
         "."
     ],
     "fileStates": {
+        "house.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 5.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 39.272727272727266,
+                "y": 62.36363636363636
+            }
+        },
+        "house2.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 10.61625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 28.446956316966908,
+                "y": 42.10526315789473
+            }
+        },
+        "overworld.tmx": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 5.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 349.8181818181818,
+                "y": 141.45454545454544
+            }
+        },
         "placeholder_tiles.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "puzzle.tsx": {
+            "scaleInEditor": 5.5
         },
         "test.tmx": {
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1.5,
-            "selectedLayer": 3,
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 131.33333333333334,
-                "y": 150
+                "x": 60,
+                "y": 115
             }
         },
         "tileset.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 4
         },
+        "tileset_big.tsx": {
+            "scaleInDock": 1
+        },
+        "tinker.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 4,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 40.25,
+                "y": 74.75
+            }
+        },
+        "town_hall.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 10.61625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 21.947486165077123,
+                "y": 38.80843047215354
+            }
+        },
         "under_test.tmx": {
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 1,
+            "scale": 5.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 56.18181818181817,
+                "y": 161.45454545454544
+            }
+        },
+        "underwater1.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 241,
-                "y": 121
+                "x": 573.3333333333333,
+                "y": 411.99999999999994
             }
         }
     },
     "last.imagePath": "/home/jack/Python Workspace/pygame-summer-jam-2023/src/assets/tiled",
-    "map.height": 40,
+    "map.height": 5,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 40,
+    "map.width": 5,
     "openFiles": [
         "under_test.tmx",
         "placeholder_tiles.tsx",
@@ -54,10 +126,13 @@
     "project": "main.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "test.tmx",
         "under_test.tmx",
         "placeholder_tiles.tsx",
-        "test.tmx",
-        "tileset.tsx"
+        "underwater1.tmx",
+        "tileset.tsx",
+        "puzzle.tsx",
+        "house.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

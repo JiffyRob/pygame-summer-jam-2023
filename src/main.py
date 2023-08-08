@@ -68,7 +68,7 @@ class Game:
                 if event.type == common.PAUSE:
                     self.stack.push(ui.PauseMenu(self.screen.copy()))
                 if event.type == common.GAME_START:
-                    world.switch_map(self.stack, "test.tmx", pop=False)
+                    world.switch_map(self.stack, "overworld.tmx", pop=False)
                 if event.type == common.TRACK_SWITCH:
                     self.sound_manager.switch_track(
                         event.path, event.volume, -1, 0, 1000

@@ -10,11 +10,12 @@ map_loader = map_loader.MapLoader()
 
 
 class MapState(base.GameState):
-    def __init__(self, filename, registry, above=None, below=None, soundtrack=None):
+    def __init__(self, filename, registry, bg, above=None, below=None, soundtrack=None):
         self.registry = registry
         self.main_group = self.registry.get_group("main")
         self.soundtrack = soundtrack
         self.particle_manager = particle.ParticleManager()
+        self.bg = bg
         if self.soundtrack is not None:
             self.music_player.play(self.soundtrack)
         hud = gui.UIGroup()
@@ -54,6 +55,8 @@ class MapState(base.GameState):
             self.layer_down()
         if event.type == common.LAYER_UP:
             self.layer_up()
+        if event.type == common.MAP_SWITCH:
+            switch_map(self._stack, event.name, event.pos)
         if event.type == common.GAME_OVER:
             self.pop()
             map_loader.clear_cache()
@@ -74,19 +77,12 @@ class MapState(base.GameState):
             )
 
     def draw(self, surface):
+        self.main_group.update_rects()
+        draw_pos = -pygame.Vector2(self.main_group.cam_rect.topleft)
+        self.bg.pos.update(*draw_pos)
+        surface.blit(self.bg.image, (0, 0))
         self.main_group.draw(surface)
-        if self.main_group.debug_physics:
-            pygame.draw.rect(
-                surface,
-                (255, 0, 0),
-                globals.player.get_interaction_rect().move(
-                    -pygame.Vector2(self.main_group.cam_rect.topleft)
-                ),
-                1,
-            )
-        self.particle_manager.draw(
-            surface, -pygame.Vector2(self.main_group.cam_rect.topleft)
-        )
+        self.particle_manager.draw(surface, draw_pos)
         super().draw(surface)
 
 
@@ -94,11 +90,12 @@ def switch_map(stack, name, player_pos=None, pop=True):
     if pop:
         stack.pop()
     print("loading", name)
-    registry, properties = map_loader.load(name, player_pos)
+    registry, properties, bg = map_loader.load(name, player_pos)
     stack.push(
         MapState(
             name,
             registry,
+            bg,
             properties.get("above", None),
             properties.get("below", None),
         )
