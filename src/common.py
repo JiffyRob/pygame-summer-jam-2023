@@ -1,3 +1,5 @@
+import math
+
 import pygame
 
 from bush import asset_handler
@@ -38,6 +40,7 @@ TERRAINS = {
 }
 
 SCREEN_SIZE = pygame.Vector2(320, 240)
+WAVE_DATA = {"amplitude": 2, "period": 20}
 
 LAYER_UP = pygame.event.custom_type()
 LAYER_DOWN = pygame.event.custom_type()

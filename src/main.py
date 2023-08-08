@@ -6,12 +6,11 @@ asset_handler.glob_loader.base = asset_handler.AssetHandler.base
 
 import asyncio
 
+import numpy  # needed for pygbag
 import pygame
 
 import common
 import gui
-import player
-from bush import util
 from bush.ai import state
 from game_state import ui, world
 

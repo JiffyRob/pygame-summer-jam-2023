@@ -3,6 +3,7 @@ import pygame
 import common
 import gui
 import map_loader
+import modulate
 from bush import particle
 from game_state import base
 
@@ -10,7 +11,16 @@ map_loader = map_loader.MapLoader()
 
 
 class MapState(base.GameState):
-    def __init__(self, filename, registry, bg, above=None, below=None, soundtrack=None):
+    def __init__(
+        self,
+        filename,
+        registry,
+        bg,
+        above=None,
+        below=None,
+        soundtrack=None,
+        modulate=False,
+    ):
         self.registry = registry
         self.main_group = self.registry.get_group("main")
         self.soundtrack = soundtrack
@@ -41,6 +51,12 @@ class MapState(base.GameState):
         self.filename = filename
         self.above = above
         self.below = below
+        self.modulate = modulate
+        if self.modulate:
+            self.modulation_offset = common.WAVE_DATA["amplitude"] * 4
+            self.to_modulate = pygame.Surface(
+                common.SCREEN_SIZE + (self.modulation_offset * 2, 0)
+            )
 
     def update(self, dt=0.03):
         super().update(dt)
@@ -80,9 +96,16 @@ class MapState(base.GameState):
         self.main_group.update_rects()
         draw_pos = -pygame.Vector2(self.main_group.cam_rect.topleft)
         self.bg.pos.update(*draw_pos)
-        surface.blit(self.bg.image, (0, 0))
-        self.main_group.draw(surface)
-        self.particle_manager.draw(surface, draw_pos)
+        if self.modulate:
+            self.to_modulate.blit(self.bg.image, (0, 0))
+            self.main_group.draw(self.to_modulate)
+            surface.blit(
+                modulate.modulate(self.to_modulate, pygame.time.get_ticks() / 1000),
+                (-self.modulation_offset, 0),
+            )
+        else:
+            surface.blit(self.bg.image, (0, 0))
+            self.main_group.draw(surface)
         super().draw(surface)
 
 
@@ -98,6 +121,7 @@ def switch_map(stack, name, player_pos=None, pop=True):
             bg,
             properties.get("above", None),
             properties.get("below", None),
+            modulate=properties.get("area", "inside") == "underwater",
         )
     )
     track = properties.get("track", None)
