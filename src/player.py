@@ -58,13 +58,7 @@ class Player(game_object.MobileGameObject):
         self.mask = pygame.Mask(self.rect.size, True)
         self.interaction_rect = pygame.Rect(0, 0, 0, 0)
         self.keys = 0
-        self.machinery = [
-            "machinery1",
-            "machinery2",
-            "machinery3",
-            "machinery4",
-            "machinery5",
-        ]
+        self.machinery = []
         self.oxygen = self.max_oxygen = 1000
         self.oxygen_timer = timer.Timer(100, self.lower_oxygen, True)
         self.push_directions = [
