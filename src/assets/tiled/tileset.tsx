@@ -286,6 +286,14 @@
    <property name="groups" value="main, collision"/>
   </properties>
  </tile>
+ <tile id="72">
+  <animation>
+   <frame tileid="72" duration="250"/>
+   <frame tileid="88" duration="250"/>
+   <frame tileid="104" duration="250"/>
+   <frame tileid="88" duration="250"/>
+  </animation>
+ </tile>
  <tile id="73">
   <properties>
    <property name="groups" value="main, collision"/>

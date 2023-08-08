@@ -139,7 +139,7 @@ class MapLoader(mapping.MapLoader):
             player_pos,
             properties.get("player_layer", self.default_player_layer),
             self.current_registry,
-            properties.get("type", "inside") == "underwater",
+            properties.get("area", "inside") == "underwater",
         )
         self.current_registry.get_group("main").add(sprite_group)
 
@@ -149,15 +149,17 @@ class MapLoader(mapping.MapLoader):
                 self.current_registry.add_mask(key, pygame.Mask(self.map_size))
 
         tiles = self.loader.load_spritesheet("tileset.png", (16, 16))
-        map_type = properties.get("type")
+        map_type = properties.get("area")
         image = None
+        parallax_factor = 0.75
         if map_type == "overworld":
             image = animation.Animation(tiles[100:104] + tiles[116:120], 100)
         if map_type == "underwater":
             image = tiles[39]
+            parallax_factor = 0.25
         bg = entity.Entity((0, 0))
         if image:
-            bg = parallax.LoopedSurface(image, 0.75, self.map_size, layer=-1)
+            bg = parallax.LoopedSurface(image, parallax_factor, self.map_size, layer=-1)
         return (
             self.current_registry,
             properties,

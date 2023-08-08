@@ -23,22 +23,22 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 10.61625,
+            "scale": 8,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 28.446956316966908,
-                "y": 42.10526315789473
+                "x": 37.5,
+                "y": 45.75
             }
         },
         "overworld.tmx": {
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 5.5,
-            "selectedLayer": 2,
+            "scale": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 349.8181818181818,
-                "y": 141.45454545454544
+                "x": 194,
+                "y": 230
             }
         },
         "placeholder_tiles.tsx": {
@@ -46,6 +46,7 @@
             "scaleInEditor": 1
         },
         "puzzle.tsx": {
+            "scaleInDock": 2,
             "scaleInEditor": 5.5
         },
         "test.tmx": {
@@ -55,8 +56,8 @@
             "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 60,
-                "y": 115
+                "x": 59.5,
+                "y": 114.5
             }
         },
         "tileset.tsx": {
@@ -95,19 +96,19 @@
             "scale": 5.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 56.18181818181817,
-                "y": 161.45454545454544
+                "x": 55.99999999999999,
+                "y": 161.0909090909091
             }
         },
         "underwater1.tmx": {
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.75,
-            "selectedLayer": 1,
+            "scale": 1.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 573.3333333333333,
-                "y": 411.99999999999994
+                "x": 186.99999999999994,
+                "y": 195.33333333333337
             }
         }
     },
@@ -127,6 +128,9 @@
     "property.type": "string",
     "recentFiles": [
         "test.tmx",
+        "house2.tmx",
+        "town_hall.tmx",
+        "tinker.tmx",
         "under_test.tmx",
         "placeholder_tiles.tsx",
         "underwater1.tmx",

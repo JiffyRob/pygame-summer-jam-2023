@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="5">
  <properties>
+  <property name="area" value="overworld"/>
+  <property name="below" value="underwater1.tmx"/>
   <property name="player_layer" type="int" value="8"/>
   <property name="track" value="overworld.wav"/>
-  <property name="type" value="overworld"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="129" source="placeholder_tiles.tsx"/>

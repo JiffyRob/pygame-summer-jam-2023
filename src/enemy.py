@@ -4,7 +4,7 @@ import pygame
 
 import arg
 import game_object
-from bush import asset_handler, timer, util
+from bush import animation, asset_handler, timer, util
 
 
 class Enemy(game_object.MobileGameObject):
@@ -25,8 +25,8 @@ class Enemy(game_object.MobileGameObject):
 
 
 class EelHead(Enemy):
-    SPEED = 12
-    TURN_SPEED = 5
+    SPEED = 24
+    TURN_SPEED = 4
     TTYPE_FOLLOW = 1
     TTYPE_RANDOM = 0
 
@@ -92,8 +92,6 @@ class EelHead(Enemy):
 
 
 class EelBody(Enemy):
-    SPEED = 32
-
     def __init__(self, data, leader):
         data.surface = asset_handler.glob_loader.load_spritesheet("eel.png", (16, 16))[
             -1
@@ -102,7 +100,7 @@ class EelBody(Enemy):
         super().__init__(data)
 
     def update_behaviour(self, dt):
-        self.desired_velocity = self.leader.pos - self.pos
+        self.desired_velocity = (self.leader.pos - self.pos) * 2
         super().update_behaviour(dt)
 
     def update_environment(self):
@@ -110,7 +108,7 @@ class EelBody(Enemy):
 
 
 class EelTail(Enemy):
-    SPEED = 32
+    SPEED = 256
 
     def __init__(self, data, leader):
         frames = asset_handler.glob_loader.load_spritesheet("tail.png", (16, 16))
@@ -130,7 +128,9 @@ class EelTail(Enemy):
         self.leader = leader
 
     def update_behaviour(self, dt):
-        self.desired_velocity = self.leader.pos - self.pos
+        self.desired_velocity = (
+            self.leader.pos - self.pos
+        ) * 2  # get there in half a second
         super().update_behaviour(dt)
 
     def update_environment(self):
@@ -144,8 +144,18 @@ class Fish(Enemy):
     SPEED = 6
 
     def __init__(self, data):
-        data.image = util.circle_surf(6, "chartreuse")
-        super().__init__(data)
+        frames = asset_handler.glob_loader.load_spritesheet("fish.png", (16, 16))
+        anim_dict = {
+            "up": animation.Animation(frames[4:]),
+            "down": animation.Animation(frames[2:4]),
+            "left": animation.Animation(frames[:2]),
+            "right": animation.Animation(frames[:2], mirror_x=True),
+        }
+        super().__init__(data, anim_dict=anim_dict)
+
+    def get_anim_key(self):
+        print(self.facing)
+        return self.facing
 
     def update_behaviour(self, dt):
         if self.registry.get_group("player").sprite:
