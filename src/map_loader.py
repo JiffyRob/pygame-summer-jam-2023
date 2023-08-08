@@ -139,7 +139,7 @@ class MapLoader(mapping.MapLoader):
             player_pos,
             properties.get("player_layer", self.default_player_layer),
             self.current_registry,
-            properties.get("area", "inside") == "underwater",
+            "underwater" in properties.get("area", "inside"),
         )
         self.current_registry.get_group("main").add(sprite_group)
 

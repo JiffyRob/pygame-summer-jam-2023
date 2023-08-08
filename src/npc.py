@@ -49,8 +49,10 @@ class OldMan(NPC):
     def __init__(self, data):
         anim_dict = {
             "idle": animation.Animation(NPC_FRAMES[3:7], NPC_LENGTHS[3:7]),
-            "transition": animation.OnceAnimation(NPC_FRAMES[1:4], NPC_LENGTHS[1:3]),
             "transition_reverse": animation.OnceAnimation(
+                NPC_FRAMES[1:4], NPC_LENGTHS[1:4]
+            ),
+            "transition": animation.OnceAnimation(
                 NPC_FRAMES[3:0:-1], NPC_LENGTHS[3:0:-1]
             ),
             "talking": animation.Animation(NPC_FRAMES[:2], NPC_LENGTHS[:2]),

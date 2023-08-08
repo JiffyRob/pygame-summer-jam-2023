@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="12">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="13">
  <properties>
   <property name="above" value="overworld.tmx"/>
   <property name="area" value="underwater"/>
+  <property name="below" value="underwater2.tmx"/>
   <property name="player_layer" type="int" value="9"/>
   <property name="track" value="undersea.wav"/>
  </properties>
@@ -123,6 +124,12 @@
     <property name="area" value="underwater"/>
     <property name="player_layer" type="int" value="9"/>
     <property name="track" value="undersea.wav"/>
+   </properties>
+  </object>
+  <object id="12" type="teleport" gid="6" x="160" y="160" width="16" height="16">
+   <properties>
+    <property name="dest" value="86, 130"/>
+    <property name="dest_map" value="dungeon-1.tmx"/>
    </properties>
   </object>
  </objectgroup>

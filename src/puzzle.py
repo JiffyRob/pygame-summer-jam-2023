@@ -127,6 +127,7 @@ class Pushblock(BiStateCommunicator):
                 physics.TYPE_DYNAMIC, data.registry.get_group("collision")
             ),
         )
+        self.state = data.misc.get("push_state", True)
 
     def on_switch(self):
         print("block to", self.state)
@@ -149,7 +150,7 @@ class Pushblock(BiStateCommunicator):
                     self.update_rects()
                 physics.resolve_collision(other, self)
                 physics.dynamic_update(other, 0, False)
-                physics.dynamic_update(self, 0, False)
+                # physics.dynamic_update(self, 0, False)
             # I smashed into something static
             case entity.Entity(
                 physics_data=physics.PhysicsData(physics.TYPE_STATIC, _)
@@ -249,6 +250,7 @@ class PressurePlate(Communicator):
         self,
         data,
     ):
+        data.layer -= 1
         super().__init__(
             data,
             physics_data=physics.PhysicsData(

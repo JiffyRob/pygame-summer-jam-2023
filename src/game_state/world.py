@@ -121,7 +121,7 @@ def switch_map(stack, name, player_pos=None, pop=True):
             bg,
             properties.get("above", None),
             properties.get("below", None),
-            modulate=properties.get("area", "inside") == "underwater",
+            modulate="underwater" in properties.get("area", "inside"),
         )
     )
     track = properties.get("track", None)

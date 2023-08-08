@@ -8,6 +8,50 @@
         "."
     ],
     "fileStates": {
+        "dungeon-1.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 4,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 45.875,
+                "y": 65.25
+            }
+        },
+        "dungeon-2.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 5.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 67,
+                "y": 94
+            }
+        },
+        "dungeon-3.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 4,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 67.625,
+                "y": 118.75
+            }
+        },
+        "dungeon-4.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 4,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 62.625,
+                "y": 88.25
+            }
+        },
         "house.tmx": {
             "expandedObjectLayers": [
                 3
@@ -37,8 +81,8 @@
             "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 194,
-                "y": 230
+                "x": 410.5,
+                "y": 386
             }
         },
         "placeholder_tiles.tsx": {
@@ -96,8 +140,19 @@
             "scale": 5.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 55.99999999999999,
-                "y": 161.0909090909091
+                "x": 77.36363636363637,
+                "y": 79.09090909090908
+            }
+        },
+        "underwater-3.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": -75.75,
+                "y": 151.5
             }
         },
         "underwater1.tmx": {
@@ -107,17 +162,28 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 141.33333333333334,
-                "y": 173.33333333333331
+                "x": 147,
+                "y": 223.33333333333337
+            }
+        },
+        "underwater2.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 214.33333333333331,
+                "y": 225.99999999999997
             }
         }
     },
     "last.imagePath": "/home/jack/Python Workspace/pygame-summer-jam-2023/src/assets/tiled",
-    "map.height": 5,
+    "map.height": 30,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 5,
+    "map.width": 30,
     "openFiles": [
         "under_test.tmx",
         "placeholder_tiles.tsx",
@@ -127,16 +193,18 @@
     "project": "main.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "dungeon-1.tmx",
+        "dungeon-2.tmx",
+        "tileset.tsx",
+        "dungeon-4.tmx",
+        "under_test.tmx",
+        "dungeon-3.tmx",
+        "underwater2.tmx",
         "test.tmx",
         "house2.tmx",
         "town_hall.tmx",
         "tinker.tmx",
-        "under_test.tmx",
-        "placeholder_tiles.tsx",
-        "underwater1.tmx",
-        "tileset.tsx",
-        "puzzle.tsx",
-        "house.tmx"
+        "placeholder_tiles.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

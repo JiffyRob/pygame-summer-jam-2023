@@ -30,7 +30,7 @@ class Player(game_object.MobileGameObject):
             "swim walk up": animation.Animation(swim_frames[12:16]),
             "idle down": walk_frames[1],
             "idle right": walk_frames[5],
-            "idle left": pygame.transform.flip(walk_frames[9], True, False),
+            "idle left": pygame.transform.flip(walk_frames[5], True, False),
             "idle up": walk_frames[9],
             "walk down": animation.Animation(walk_frames[0:4], 150),
             "walk right": animation.Animation(walk_frames[4:8], 150),
