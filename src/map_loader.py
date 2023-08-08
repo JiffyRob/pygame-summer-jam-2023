@@ -3,6 +3,7 @@ import pygame
 import arg
 import common
 import enemy
+import machinery
 import npc
 import pickup
 import player
@@ -32,6 +33,7 @@ class MapLoader(mapping.MapLoader):
             "old-man": npc.OldMan,
             "tinker": npc.Tinker,
             "teleport": teleport.Teleport,
+            "THE MACHINE": machinery.Machine,
         }
         self.player = None
         self.default_player_layer = 4  # second layer (default sub)
@@ -57,6 +59,7 @@ class MapLoader(mapping.MapLoader):
                 "communicators": lambda x: group.EntityGroup(),
                 "enemies": lambda x: pygame.sprite.Group(),
                 "pickups": lambda x: pygame.sprite.Group(),
+                "THE MACHINE": lambda x: pygame.sprite.GroupSingle(),
             },
         )
 
@@ -132,7 +135,7 @@ class MapLoader(mapping.MapLoader):
             player_pos = pygame.Vector2(
                 [
                     int(i)
-                    for i in tmx_map.properties.get("player_pos", "48, 48").split(", ")
+                    for i in tmx_map.properties.get("player_pos", "87, 87").split(", ")
                 ]
             )
         self.player.reset(

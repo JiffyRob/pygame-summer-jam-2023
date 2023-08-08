@@ -34,11 +34,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 4,
-            "selectedLayer": 2,
+            "scale": 3,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 67.625,
-                "y": 118.75
+                "x": 76.83333333333333,
+                "y": 42.999999999999986
             }
         },
         "dungeon-4.tmx": {
@@ -50,6 +50,17 @@
             "viewCenter": {
                 "x": 62.625,
                 "y": 88.25
+            }
+        },
+        "garage.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 4,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 68.875,
+                "y": 135.75
             }
         },
         "house.tmx": {
@@ -78,11 +89,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 1,
-            "selectedLayer": 0,
+            "scale": 4,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 410.5,
-                "y": 386
+                "x": 300.625,
+                "y": 148.75
             }
         },
         "placeholder_tiles.tsx": {
@@ -163,7 +174,7 @@
             "selectedLayer": 3,
             "viewCenter": {
                 "x": 147,
-                "y": 223.33333333333337
+                "y": 222.66666666666663
             }
         },
         "underwater2.tmx": {
@@ -179,11 +190,11 @@
         }
     },
     "last.imagePath": "/home/jack/Python Workspace/pygame-summer-jam-2023/src/assets/tiled",
-    "map.height": 30,
+    "map.height": 10,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 30,
+    "map.width": 10,
     "openFiles": [
         "under_test.tmx",
         "placeholder_tiles.tsx",
@@ -193,18 +204,18 @@
     "project": "main.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "underwater1.tmx",
+        "underwater2.tmx",
+        "dungeon-4.tmx",
+        "dungeon-3.tmx",
+        "underwater-3.tmx",
         "dungeon-1.tmx",
         "dungeon-2.tmx",
         "tileset.tsx",
-        "dungeon-4.tmx",
         "under_test.tmx",
-        "dungeon-3.tmx",
-        "underwater2.tmx",
         "test.tmx",
         "house2.tmx",
-        "town_hall.tmx",
-        "tinker.tmx",
-        "placeholder_tiles.tsx"
+        "town_hall.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

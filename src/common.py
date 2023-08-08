@@ -4,6 +4,7 @@ import pygame
 
 from bush import asset_handler
 
+parts = []
 ITEM_IMAGES = dict(
     zip(
         asset_handler.glob_loader.load("pickup_names.csv", flatten=True),

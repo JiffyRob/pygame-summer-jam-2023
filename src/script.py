@@ -44,7 +44,7 @@ class Script:
             "take_machinery": snek.snek_command(
                 self.registry.get_group("player").sprite.give_machinery
             ),
-            "fix_with_tech": snek.snek_command(lambda tech: print("Fixing with", tech)),
+            "fix_with_tech": snek.snek_command(common.parts.extend),
             # vector operation
             "vec": snek.snek_command(lambda *args: pygame.Vector2(*args)),
             "norm": snek.snek_command(lambda vec: vec.copy() or vec.normalize()),
